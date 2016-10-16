@@ -34,9 +34,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         manager.requestWhenInUseAuthorization()
         manager.requestAlwaysAuthorization()
         manager.requestLocation()
-//        manager.startUpdatingLocation()
         map.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
         setupAlertView()
+        
+        
+
         
     }
     
@@ -97,31 +99,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 self.alert.title = locationName
                 
             }
-            //            // Street address
-            //            if let street = placeMark.addressDictionary?["Thoroughfare"] as? NSString
-            //            {
-            //                print(street)
-            //            }
-            //
-            //            // City
-            //            if let city = placeMark.addressDictionary?["City"] as? NSString
-            //            {
-            //                print(city)
-            //            }
-            //
-            //            // Zip code
-            //            if let zip = placeMark.addressDictionary?["ZIP"] as? NSString
-            //            {
-            //                print(zip)
-            //            }
-            //
-            //            // Country
-            //            if let country = placeMark.addressDictionary?["Country"] as? NSString
-            //            {
-            //                print(country)
-            //            }
-            
-            
         }
     }
     
@@ -130,28 +107,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             textfield.textColor = UIColor.darkText
         }
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-            switch action.style{
-            case .default:
-                print("default")
-                
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
+            print("OK PRESSED")
+            let textString = self.alert.textFields![0].text!
+            let trimmedString = textString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+
+            if trimmedString == "" {
+                print("EMPTY")
+            } else {
+                let dropPin = MKPointAnnotation()
+                dropPin.coordinate = self.currentLocation.coordinate
+                dropPin.title = trimmedString
+                self.map.addAnnotation(dropPin)
             }
+            self.alert.textFields![0].text = ""
+
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            switch action.style{
-            case .default:
-                print("default")
-                
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
-            }
+            print("CANCEL PRESSED")
+            self.alert.textFields![0].text = ""
         }))
     }
 
