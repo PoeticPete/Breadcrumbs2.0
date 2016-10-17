@@ -38,7 +38,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setupAlertView()
         
         
+        // TESTING
+        var coordinates = [[48.85672,2.35501],[48.85196,2.33944],[48.85376,2.33953]]// Latitude,Longitude
 
+        let coordinate = coordinates[0]
+        let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: coordinate[0] , longitude: coordinate[1] ))
+        self.map.addAnnotation(point)
         
     }
     
@@ -70,13 +75,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setCurrentLocationName()
         print("UPDATED \(location)")
 
- 
     }
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("failllleeeddd\n")
         print(error)
     }
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation is MKUserLocation
+//        {
+//            print("annotation is user location")
+//            return nil
+//        }
+//        var annotationView = self.map.dequeueReusableAnnotationView(withIdentifier: "Pin")
+//        if annotationView == nil{
+//            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+//            annotationView?.canShowCallout = false
+//        }else{
+//            annotationView?.annotation = annotation
+//        }
+//        annotationView?.image = UIImage(named: "map-marker")
+//        return annotationView
+//    }
     
     func setCurrentLocationName() {
         
@@ -114,9 +136,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             if trimmedString == "" {
                 print("EMPTY")
             } else {
-                let dropPin = MKPointAnnotation()
-                dropPin.coordinate = self.currentLocation.coordinate
-                dropPin.title = trimmedString
+                let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
+                dropPin.message = trimmedString
                 self.map.addAnnotation(dropPin)
             }
             self.alert.textFields![0].text = ""
@@ -126,6 +147,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             print("CANCEL PRESSED")
             self.alert.textFields![0].text = ""
         }))
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("hi")
+        print(view.annotation?.title)
     }
 
 }
