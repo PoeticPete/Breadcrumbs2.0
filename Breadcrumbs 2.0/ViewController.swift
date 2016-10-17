@@ -20,6 +20,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var manager:CLLocationManager!
     var currentLocation:CLLocation!
     let alert = UIAlertController(title: "Drop a crumb", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+    var flatAnnotationImage:UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,19 +28,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // set class variables
         geofireRef = FIRDatabase.database().reference().child("test")
         geoFire = GeoFire(firebaseRef: geofireRef)
-        manager = CLLocationManager()
-        manager.allowsBackgroundLocationUpdates = true
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.requestAlwaysAuthorization()
-        manager.requestLocation()
-        map.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
+        map.delegate = self
+        setupLocationManager()
         setupAlertView()
+        setupAnnotationIconImage()
         
         
         // TESTING
-        var coordinates = [[48.85672,2.35501],[48.85196,2.33944],[48.85376,2.33953]]// Latitude,Longitude
+        var coordinates = [[37.35647419,-122.11607907],[48.85196,2.33944],[48.85376,2.33953]]// Latitude,Longitude
 
         let coordinate = coordinates[0]
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: coordinate[0] , longitude: coordinate[1] ))
@@ -50,15 +46,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     @IBAction func composeTapped(_ sender: AnyObject) {
         manager.requestLocation()
-        
-//        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-
-        
         self.present(alert, animated: true, completion: nil)
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         
         // get region
         let location = locations.last! as CLLocation
@@ -77,31 +68,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
     }
     
+    // THIS SETS CUSTOM PINS
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        print("IN VIEW FOR ANNOTATION")
+        if annotation is MKUserLocation
+        {
+            return nil
+        }
+        var annotationView = self.map.dequeueReusableAnnotationView(withIdentifier: "Pin")
+        if annotationView == nil{
+            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+            annotationView!.canShowCallout = false
+        } else{
+            annotationView?.annotation = annotation
+        }
+        annotationView!.image = flatAnnotationImage.imageWithColor(color1: themeColor)
+        return annotationView
+    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("failllleeeddd\n")
         print(error)
     }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if annotation is MKUserLocation
-//        {
-//            print("annotation is user location")
-//            return nil
-//        }
-//        var annotationView = self.map.dequeueReusableAnnotationView(withIdentifier: "Pin")
-//        if annotationView == nil{
-//            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
-//            annotationView?.canShowCallout = false
-//        }else{
-//            annotationView?.annotation = annotation
-//        }
-//        annotationView?.image = UIImage(named: "map-marker")
-//        return annotationView
-//    }
-    
     func setCurrentLocationName() {
-        
         CLGeocoder().reverseGeocodeLocation(currentLocation)
         {
             (placemarks, error) -> Void in
@@ -124,6 +114,49 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // 1
+        if view.annotation is MKUserLocation
+        {
+            // Don't proceed with custom callout
+            return
+        }
+        var annotation = view.annotation as! CustomAnnotation
+        let views = Bundle.main.loadNibNamed("Callout", owner: nil, options: nil)
+        let calloutview = views![0] as! CalloutView
+        calloutview.layer.cornerRadius = 20
+        calloutview.layer.masksToBounds = true
+        calloutview.messageLabel.text = "sup mike"
+        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.30)
+        calloutview.alpha = 0.0
+        calloutview.backgroundColor = themeColor
+        view.addSubview(calloutview)
+        UIView.animate(withDuration: 0.4, animations: {
+            calloutview.alpha = 1.0
+        })
+        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        if view.isKind(of: AnnotationView.self)
+        {
+            for subview in view.subviews
+            {
+                UIView.animate(withDuration: 0.4, animations: {
+                    subview.alpha = 0.0
+                    }, completion: { (true) in
+                        subview.removeFromSuperview()
+                })
+            }
+        }
+    }
+    
+    
+    
+    
+    // --------------------------SETUP FUNCTIONS (CALLED IN VIEW DID LOAD)--------------------------
     func setupAlertView() {
         alert.addTextField { (textfield) in
             textfield.textColor = UIColor.darkText
@@ -132,16 +165,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             print("OK PRESSED")
             let textString = self.alert.textFields![0].text!
             let trimmedString = textString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-
+            
             if trimmedString == "" {
                 print("EMPTY")
             } else {
                 let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
                 dropPin.message = trimmedString
+                print(self.currentLocation.coordinate)
                 self.map.addAnnotation(dropPin)
             }
             self.alert.textFields![0].text = ""
-
+            
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             print("CANCEL PRESSED")
@@ -149,12 +183,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }))
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("hi")
-        print(view.annotation?.title)
+    func setupAnnotationIconImage() {
+        flatAnnotationImage = UIImage(named: "map-marker")!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
     }
+    
+    func setupLocationManager() {
+        manager = CLLocationManager()
+        manager.allowsBackgroundLocationUpdates = true
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.requestAlwaysAuthorization()
+        manager.requestLocation()
+    }
+    
 
 }
+
 
 
 // OLD LOCATION CODE
