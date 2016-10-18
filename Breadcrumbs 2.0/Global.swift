@@ -15,3 +15,4 @@ func setNewLocation(loc: CLLocation, baseRef: FIRDatabaseReference, key:String) 
     let newGeoFire = GeoFire(firebaseRef: baseRef)
     newGeoFire?.setLocation(loc, forKey: key)
 }
+
