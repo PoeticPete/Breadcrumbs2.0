@@ -23,7 +23,7 @@ class CalloutView: UIView {
     
     @IBAction func downTapped(_ sender: AnyObject) {
         print("tapped down")
-        upOutlet.tintColor = UIColor.blue
+        downOutlet.tintColor = UIColor.blue
     }
     
     
