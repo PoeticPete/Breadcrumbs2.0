@@ -56,11 +56,13 @@ class CalloutView: UIView {
             downOutlet.tintColor = UIColor.lightGray
             currLikes += 1
             vote(1)
+            annotation.upVotes = annotation.upVotes + 1
             
         } else {
             downOutlet.tintColor = UIColor.blue
             currLikes -= 1
             vote(-1)
+            annotation.upVotes = annotation.upVotes - 1
         }
         upvotesLabel.text = "\(currLikes)"
         downSelected = !downSelected
@@ -80,6 +82,7 @@ class CalloutView: UIView {
             currentData.value = value! + i
             return FIRTransactionResult.success(withValue: currentData)
         }
+        myVotesRef.child(deviceID).child(key).setValue(i)
     }
     /*
     // Only override draw() if you perform custom drawing.
