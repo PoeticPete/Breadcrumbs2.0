@@ -32,24 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setupLocationManager()
         setupAlertView()
         setupAnnotationIconImage()
-        
-        
-        // TESTING
-        var coordinates = [[37.35647419,-122.11607907],[48.85196,2.33944],[48.85376,2.33953]]// Latitude,Longitude
-
-        let coordinate = coordinates[0]
-        let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: coordinate[0] , longitude: coordinate[1] ))
-        point.message = "First message"
-        self.map.addAnnotation(point)
-        
-        let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
-        let calloutview = views![0] as! CalloutView
-        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.width / 2)
-        calloutview.backgroundColor = UIColor.green
-        calloutview.layer.cornerRadius = 20
-        calloutview.layer.masksToBounds = true
-
-//        view.addSubview(calloutview)
+        getLocalMessages()
         
         
     }
