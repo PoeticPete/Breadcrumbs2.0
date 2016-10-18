@@ -32,9 +32,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setupLocationManager()
         setupAlertView()
         setupAnnotationIconImage()
+        map.showsUserLocation = true
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         getLocalMessages()
-        
-        
     }
     
     
@@ -106,6 +110,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.layer.cornerRadius = 20
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
+        calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
+        calloutview.key = annotation.key
+        calloutview.annotation = annotation
         
 //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
         calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
@@ -218,15 +225,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     // ----------------------Retrieve from Database------------------------
     func getLocalMessages() {
         print("getting local messages")
-        let currPosts = FIRDatabase.database().reference().child("currentPosts")
-        let currGeoFire = GeoFire(firebaseRef: currPosts)
+        let currGeoFire = GeoFire(firebaseRef: currPostsRef)
         let center = currentLocation
         let circleQuery = currGeoFire!.query(at: center, withRadius: 100)
         
         circleQuery!.observe(.keyEntered, with: { snapshot in
             print(snapshot.0!)
-            currPosts.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
-                self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String)
+            
+            allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
+                self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key)
                 
             })
             print(snapshot.1!)
@@ -238,27 +245,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     func setMessage(loc:CLLocation, message:String) {
         let randomKey = FIRDatabase.database().reference().childByAutoId()
-        let currPosts = FIRDatabase.database().reference().child("currentPosts")
 //        let allPosts = FIRDatabase.database().reference().child("allPosts")
 //        let myPosts = FIRDatabase.database().reference().child("myPosts")
         
         let firebaseTimeStamp = [".sv":"timestamp"]
-        setNewLocation(loc: loc, baseRef: currPosts, key: randomKey.key)
-        currPosts.child(randomKey.key).child("message").setValue(message)
-        currPosts.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
+        setNewLocation(loc: loc, baseRef: currPostsRef, key: randomKey.key)
+        allPostsRef.child(randomKey.key).child("message").setValue(message)
+        allPostsRef.child(randomKey.key).child("upVotes").setValue(0)
+        allPostsRef.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
         
-
     }
     
-    func addAnnotation(loc:CLLocation, message:String) {
+    func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String) {
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude))
         point.message = message
+        point.upVotes = upVotes
+        point.key = key
         self.map.addAnnotation(point)
     }
     
     @IBAction func refreshTapped(_ sender: AnyObject) {
         let allAnnotations = self.map.annotations
         self.map.removeAnnotations(allAnnotations)
+        clearCallouts()
         getLocalMessages()
     }
 

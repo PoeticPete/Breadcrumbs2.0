@@ -13,6 +13,8 @@ class CalloutView: UIView {
 
     var upSelected = false
     var downSelected = false
+    var key:String!
+    var annotation:CustomAnnotation!
     
     @IBOutlet weak var upvotesLabel: UILabel!
     @IBOutlet weak var upOutlet: UIButton!
@@ -29,9 +31,14 @@ class CalloutView: UIView {
         if upSelected {
             upOutlet.tintColor = UIColor.lightGray
             currLikes -= 1
+            vote(-1)
+            annotation.upVotes = annotation.upVotes - 1
+            
         } else {
             upOutlet.tintColor = UIColor.blue
             currLikes += 1
+            vote(1)
+            annotation.upVotes = annotation.upVotes + 1
         }
         upvotesLabel.text = "\(currLikes)"
         upSelected = !upSelected
@@ -48,10 +55,12 @@ class CalloutView: UIView {
         if downSelected {
             downOutlet.tintColor = UIColor.lightGray
             currLikes += 1
+            vote(1)
             
         } else {
             downOutlet.tintColor = UIColor.blue
             currLikes -= 1
+            vote(-1)
         }
         upvotesLabel.text = "\(currLikes)"
         downSelected = !downSelected
@@ -62,8 +71,15 @@ class CalloutView: UIView {
     @IBOutlet weak var messageLabel: UILabel!
     
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    func vote(_ i: Int) {
+        allPostsRef.child(key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in
+            var value = currentData.value as? Int
+            if value == nil {
+                value = 0
+            }
+            currentData.value = value! + i
+            return FIRTransactionResult.success(withValue: currentData)
+        }
     }
     /*
     // Only override draw() if you perform custom drawing.

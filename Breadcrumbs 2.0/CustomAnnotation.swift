@@ -12,12 +12,10 @@ import MapKit
 class CustomAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
-    var phone: String!
-    var name: String!
-    var address: String!
-    var image: UIImage!
-    
+
+    var key:String!
     var message: String!
+    var upVotes: Int!
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate

@@ -8,6 +8,8 @@
 import Firebase
 
 let themeColor = UIColor(red: 34.0/255.0, green: 167.0/255.0, blue: 240.0/255.0, alpha: 1.0)
+let allPostsRef = FIRDatabase.database().reference().child("allPosts")
+let currPostsRef = FIRDatabase.database().reference().child("currentPostLocations")
 
 
 // this function will create a new geoFire location in Firebase
