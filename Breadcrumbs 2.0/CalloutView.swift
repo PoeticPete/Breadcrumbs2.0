@@ -72,6 +72,15 @@ class CalloutView: UIView {
     
     @IBOutlet weak var messageLabel: UILabel!
     
+//    init() {
+//        if myVotes[key] == 1 {
+//            upSelected = true
+//            upOutlet.tintColor = UIColor.blue
+//        } else if myVotes[key] == -1 {
+//            downSelected = true
+//            upOutlet.tintColor = UIColor.lightGray
+//        }
+//    }
     
     func vote(_ i: Int) {
         allPostsRef.child(key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in

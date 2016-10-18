@@ -12,6 +12,7 @@ let themeColor = UIColor(red: 34.0/255.0, green: 167.0/255.0, blue: 240.0/255.0,
 let allPostsRef = FIRDatabase.database().reference().child("allPosts")
 let currPostsRef = FIRDatabase.database().reference().child("currentPostLocations")
 let myVotesRef = FIRDatabase.database().reference().child("myVotes")
+var myVotes = [String: Int]()
 
 
 // this function will create a new geoFire location in Firebase
@@ -22,6 +23,9 @@ func setNewLocation(loc: CLLocation, baseRef: FIRDatabaseReference, key:String) 
 
 func getMyVotes() {
     myVotesRef.child(deviceID).observeSingleEvent(of: .value, with: { (snapshot) in
-        print(snapshot)
+        for child in snapshot.children {
+            let childSnap = child as! FIRDataSnapshot
+            myVotes[childSnap.key] = childSnap.value as! Int
+        }
     })
 }
