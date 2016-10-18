@@ -108,6 +108,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="136" id="1Mz-Pm-xZj"/>
                                     <constraint firstAttribute="trailing" secondItem="M9V-xy-vnC" secondAttribute="trailing" constant="8" id="BD8-NA-ugP"/>
                                     <constraint firstItem="DGZ-R2-keR" firstAttribute="top" secondItem="bEC-eJ-y6n" secondAttribute="top" constant="8" id="ErO-Ol-WaE"/>
                                     <constraint firstAttribute="bottom" secondItem="DGZ-R2-keR" secondAttribute="bottom" constant="8" id="SMr-yQ-y3s"/>
@@ -136,7 +137,9 @@
                     <navigationItem key="navigationItem" title="My profile" id="cO3-et-Ml4"/>
                     <connections>
                         <outlet property="crumbsTableView" destination="5W3-dQ-Q6X" id="WnK-ey-BFS"/>
+                        <outlet property="headerHeight" destination="1Mz-Pm-xZj" id="POZ-qj-FGM"/>
                         <outlet property="profileDescriptionView" destination="bEC-eJ-y6n" id="rOV-Hp-goy"/>
+                        <outlet property="profilePic" destination="DGZ-R2-keR" id="RI6-0n-mtD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cgV-16-tfm" userLabel="First Responder" sceneMemberID="firstResponder"/>

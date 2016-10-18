@@ -12,13 +12,104 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var crumbsTableView: UITableView!
     @IBOutlet weak var profileDescriptionView: UIView!
 
+    @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var headerHeight: NSLayoutConstraint!
+    
+    //@IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
+    let maxHeaderHeight: CGFloat = 88;
+    let minHeaderHeight: CGFloat = 44;
+    var previousScrollOffset: CGFloat = 0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         crumbsTableView.tableHeaderView = profileDescriptionView
-        crumbsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-
+        //crumbsTableView.contentInset = UIEdgeInsetsMake(-500, 0, 0, 0);
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.headerHeight.constant = self.maxHeaderHeight
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
+        
+        let absoluteTop: CGFloat = 0;
+        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
+        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
+        
+        // Calculate new header height
+        var newHeight = self.headerHeight.constant
+        if isScrollingDown {
+            newHeight = max(self.minHeaderHeight, self.headerHeight.constant - abs(scrollDiff))
+        } else if isScrollingUp {
+            newHeight = min(self.maxHeaderHeight, self.headerHeight.constant + abs(scrollDiff))
+        }
+        
+        // Header needs to animate
+        if newHeight != self.headerHeight.constant {
+            self.headerHeight.constant = newHeight
+            self.updateHeader()
+            self.setScrollPosition(position: self.previousScrollOffset)
+        }
+        
+        self.previousScrollOffset = scrollView.contentOffset.y
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.scrollViewDidStopScrolling()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.scrollViewDidStopScrolling()
+        }
+    }
+    
+    func scrollViewDidStopScrolling() {
+        let range = self.maxHeaderHeight - self.minHeaderHeight
+        let midPoint = self.minHeaderHeight + (range / 2)
+        
+        if self.headerHeight.constant > midPoint {
+            self.expandHeader()
+        } else {
+            self.collapseHeader()
+        }
+    }
+    
+    func collapseHeader() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeight.constant = self.minHeaderHeight
+            self.updateHeader()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func expandHeader() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeight.constant = self.maxHeaderHeight
+            self.updateHeader()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func setScrollPosition(position: CGFloat) {
+        self.crumbsTableView.contentOffset = CGPoint(x: self.crumbsTableView.contentOffset.x, y: position)
+    }
+    
+    func updateHeader() {
+        let range = self.maxHeaderHeight - self.minHeaderHeight
+        let openAmount = self.headerHeight.constant - self.minHeaderHeight
+        let percentage = openAmount / range
+        
+        //self.titleTopConstraint.constant = -openAmount + 10
+        self.profilePic.alpha = percentage
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,16 +119,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //Table view methods:
     
+    private func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 40
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        cell.textLabel!.text = "Cell \(indexPath.row)"
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
     //end table view methods
