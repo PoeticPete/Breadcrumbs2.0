@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */; };
 		8643615B1DB544E600F3E6C0 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8643615A1DB544E600F3E6C0 /* AnnotationView.swift */; };
 		8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */; };
 		864361611DB56B6100F3E6C0 /* Callout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 864361601DB56B6100F3E6C0 /* Callout.xib */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		241ACCF900D0D175B53ED3C5 /* Pods-Breadcrumbs 2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breadcrumbs 2.0.release.xcconfig"; path = "Pods/Target Support Files/Pods-Breadcrumbs 2.0/Pods-Breadcrumbs 2.0.release.xcconfig"; sourceTree = "<group>"; };
 		4F64F958668F4AF79481A27A /* Pods-Breadcrumbs 2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breadcrumbs 2.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Breadcrumbs 2.0/Pods-Breadcrumbs 2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		8643615A1DB544E600F3E6C0 /* AnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				864361641DB572BD00F3E6C0 /* Extensions.swift */,
 				8643615A1DB544E600F3E6C0 /* AnnotationView.swift */,
 				86734D061DB1771900195E42 /* Main.storyboard */,
+				1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */,
 				86734D091DB1771900195E42 /* Assets.xcassets */,
 				864361601DB56B6100F3E6C0 /* Callout.xib */,
 				864361621DB56B8800F3E6C0 /* CalloutView.swift */,
@@ -290,6 +293,7 @@
 				86734D051DB1771900195E42 /* ViewController.swift in Sources */,
 				8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */,
 				864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */,
+				1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */,
 				86734D651DB1B76000195E42 /* GFGeoHash.m in Sources */,
 				86734D031DB1771900195E42 /* AppDelegate.swift in Sources */,
 				86734D631DB1B76000195E42 /* GeoFire.m in Sources */,
