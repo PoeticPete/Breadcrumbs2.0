@@ -18,24 +18,30 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-24-zo1">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-24-zo1" customClass="DOFavoriteButton" customModule="Breadcrumbs_2_0" customModuleProvider="target">
                     <constraints>
                         <constraint firstAttribute="width" secondItem="fRz-24-zo1" secondAttribute="height" multiplier="1:1" id="pyV-E2-GA8"/>
                         <constraint firstAttribute="width" constant="30" id="q0Z-uL-EtS"/>
                     </constraints>
                     <state key="normal" title="Button" image="up"/>
+                    <connections>
+                        <action selector="upTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="rNd-w5-Mut"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flq-Ss-odX">
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Bm-ls-fSC">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Bm-ls-fSC" customClass="DOFavoriteButton" customModule="Breadcrumbs_2_0" customModuleProvider="target">
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="kJX-jT-vzK"/>
                         <constraint firstAttribute="width" secondItem="4Bm-ls-fSC" secondAttribute="height" multiplier="1:1" id="sOQ-aP-INk"/>
                     </constraints>
                     <state key="normal" title="Button" image="down"/>
+                    <connections>
+                        <action selector="downTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="QqM-rt-vED"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -51,9 +57,11 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="downOutlet" destination="4Bm-ls-fSC" id="img-Tm-MAE"/>
                 <outlet property="messageLabel" destination="uc3-BJ-3nC" id="KMW-uR-jRa"/>
+                <outlet property="upOutlet" destination="fRz-24-zo1" id="m2W-Vq-8N1"/>
             </connections>
-            <point key="canvasLocation" x="15.5" y="-151"/>
+            <point key="canvasLocation" x="21" y="-232"/>
         </view>
     </objects>
     <resources>

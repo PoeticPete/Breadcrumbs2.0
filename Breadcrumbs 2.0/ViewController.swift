@@ -109,14 +109,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             return
         }
         var annotation = view.annotation as! CustomAnnotation
-        let views = Bundle.main.loadNibNamed("Callout", owner: nil, options: nil)
+        let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
         let calloutview = views![0] as! CalloutView
         calloutview.layer.cornerRadius = 20
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
+        
         calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
         calloutview.alpha = 0.0
         calloutview.backgroundColor = themeColor
+        calloutview.isUserInteractionEnabled = true
+        
+        //-------------------------------optional stuff------------------------------
+        print(calloutview.frame)
+
+        //-------------------------------------------------------------------------------
+        
+//        calloutview.frame = CGRect(x: Double(calloutview.center.x - 330/2), y: Double(calloutview.center.y - 230/2), width: 330.0, height: 230.0)
         view.addSubview(calloutview)
         UIView.animate(withDuration: 0.4, animations: {
             calloutview.alpha = 1.0
@@ -132,7 +141,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             {
                 UIView.animate(withDuration: 0.4, animations: {
                     subview.alpha = 0.0
-                    }, completion: { (true) in
+                    }, completion: { void in
                         subview.removeFromSuperview()
                 })
             }
@@ -185,6 +194,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             self.alert.textFields![0].text = ""
         }))
     }
+    
     
     func setupAnnotationIconImage() {
         flatAnnotationImage = UIImage(named: "map-marker")!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
@@ -243,8 +253,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     @IBAction func refreshTapped(_ sender: AnyObject) {
+        let allAnnotations = self.map.annotations
+        self.map.removeAnnotations(allAnnotations)
         getLocalMessages()
     }
+
 
 }
 
