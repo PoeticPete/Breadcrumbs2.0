@@ -108,7 +108,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.messageLabel.text = annotation.message
         
 //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
-        calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.65)
+        calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
         calloutview.alpha = 0.0
         calloutview.backgroundColor = themeColor
         calloutview.isUserInteractionEnabled = true

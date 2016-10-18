@@ -19,6 +19,11 @@ class CalloutView: UIView {
     @IBOutlet weak var downOutlet: UIButton!
     
     @IBAction func upTapped(_ sender: AnyObject) {
+        
+        if downSelected {
+            return
+        }
+        
         var currLikes = Int(upvotesLabel.text!)!
         
         if upSelected {
@@ -35,6 +40,10 @@ class CalloutView: UIView {
     }
     
     @IBAction func downTapped(_ sender: AnyObject) {
+        if upSelected {
+            return
+        }
+        
         var currLikes = Int(upvotesLabel.text!)!
         if downSelected {
             downOutlet.tintColor = UIColor.lightGray
