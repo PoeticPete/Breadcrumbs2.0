@@ -31,7 +31,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sLi-5F-O6M">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="RBY-Pb-Ym8"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="RBY-Pb-Ym8">
+                            <connections>
+                                <action selector="refreshTapped:" destination="BYZ-38-t0r" id="LjW-8X-Xy3"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="f3y-zX-SRh">
                             <connections>
                                 <action selector="composeTapped:" destination="BYZ-38-t0r" id="xsp-Xi-WCX"/>

@@ -39,6 +39,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
         let coordinate = coordinates[0]
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: coordinate[0] , longitude: coordinate[1] ))
+        point.message = "First message"
         self.map.addAnnotation(point)
         
     }
@@ -68,23 +69,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
     }
     
-    // THIS SETS CUSTOM PINS
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("IN VIEW FOR ANNOTATION")
-        if annotation is MKUserLocation
-        {
-            return nil
-        }
-        var annotationView = self.map.dequeueReusableAnnotationView(withIdentifier: "Pin")
-        if annotationView == nil{
-            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
-            annotationView!.canShowCallout = false
-        } else{
-            annotationView?.annotation = annotation
-        }
-        annotationView!.image = flatAnnotationImage.imageWithColor(color1: themeColor)
-        return annotationView
-    }
+
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("failllleeeddd\n")
@@ -115,6 +100,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     
+    // --------------------------ANNOTATIONS--------------------------
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // 1
         if view.annotation is MKUserLocation
@@ -127,7 +113,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let calloutview = views![0] as! CalloutView
         calloutview.layer.cornerRadius = 20
         calloutview.layer.masksToBounds = true
-        calloutview.messageLabel.text = "sup mike"
+        calloutview.messageLabel.text = annotation.message
         calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.30)
         calloutview.alpha = 0.0
         calloutview.backgroundColor = themeColor
@@ -153,6 +139,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        print("IN VIEW FOR ANNOTATION")
+        if annotation is MKUserLocation
+        {
+            return nil
+        }
+        var annotationView = self.map.dequeueReusableAnnotationView(withIdentifier: "Pin")
+        if annotationView == nil{
+            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+            annotationView!.canShowCallout = false
+        } else{
+            annotationView?.annotation = annotation
+        }
+        annotationView!.image = flatAnnotationImage.imageWithColor(color1: themeColor)
+        return annotationView
+    }
     
     
     
@@ -172,6 +174,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
                 dropPin.message = trimmedString
                 print(self.currentLocation.coordinate)
+                self.setMessage(loc: self.currentLocation, message: trimmedString)
                 self.map.addAnnotation(dropPin)
             }
             self.alert.textFields![0].text = ""
@@ -197,6 +200,51 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         manager.requestLocation()
     }
     
+    
+    // ----------------------Retrieve from Database------------------------
+    func getLocalMessages() {
+        print("getting local messages")
+        let currPosts = FIRDatabase.database().reference().child("currentPosts")
+        let currGeoFire = GeoFire(firebaseRef: currPosts)
+        let center = currentLocation
+        let circleQuery = currGeoFire!.query(at: center, withRadius: 100)
+        
+        circleQuery!.observe(.keyEntered, with: { snapshot in
+            print(snapshot.0!)
+            currPosts.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
+                self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String)
+                
+            })
+            print(snapshot.1!)
+            
+        })
+        
+        
+    }
+    
+    func setMessage(loc:CLLocation, message:String) {
+        let randomKey = FIRDatabase.database().reference().childByAutoId()
+        let currPosts = FIRDatabase.database().reference().child("currentPosts")
+//        let allPosts = FIRDatabase.database().reference().child("allPosts")
+//        let myPosts = FIRDatabase.database().reference().child("myPosts")
+        
+        let firebaseTimeStamp = [".sv":"timestamp"]
+        setNewLocation(loc: loc, baseRef: currPosts, key: randomKey.key)
+        currPosts.child(randomKey.key).child("message").setValue(message)
+        currPosts.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
+        
+
+    }
+    
+    func addAnnotation(loc:CLLocation, message:String) {
+        let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude))
+        point.message = message
+        self.map.addAnnotation(point)
+    }
+    
+    @IBAction func refreshTapped(_ sender: AnyObject) {
+        getLocalMessages()
+    }
 
 }
 
