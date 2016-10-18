@@ -13,6 +13,7 @@
 		864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361621DB56B8800F3E6C0 /* CalloutView.swift */; };
 		864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361641DB572BD00F3E6C0 /* Extensions.swift */; };
 		864361671DB57C0E00F3E6C0 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361661DB57C0E00F3E6C0 /* Global.swift */; };
+		8643616A1DB5A6DF00F3E6C0 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */; };
 		86734D031DB1771900195E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D021DB1771900195E42 /* AppDelegate.swift */; };
 		86734D051DB1771900195E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D041DB1771900195E42 /* ViewController.swift */; };
 		86734D081DB1771900195E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86734D061DB1771900195E42 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 		864361621DB56B8800F3E6C0 /* CalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
 		864361641DB572BD00F3E6C0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		864361661DB57C0E00F3E6C0 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
 		86734CFF1DB1771900195E42 /* Breadcrumbs 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breadcrumbs 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86734D021DB1771900195E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86734D041DB1771900195E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		86734D011DB1771900195E42 /* Breadcrumbs 2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */,
 				8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */,
 				86734D021DB1771900195E42 /* AppDelegate.swift */,
 				86734D041DB1771900195E42 /* ViewController.swift */,
@@ -294,6 +297,7 @@
 				864361671DB57C0E00F3E6C0 /* Global.swift in Sources */,
 				86734D661DB1B76000195E42 /* GFGeoHashQuery.m in Sources */,
 				864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */,
+				8643616A1DB5A6DF00F3E6C0 /* DOFavoriteButton.swift in Sources */,
 				86734D671DB1B76000195E42 /* GFQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -114,7 +114,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.layer.cornerRadius = 20
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
-        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.30)
+        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
         calloutview.alpha = 0.0
         calloutview.backgroundColor = themeColor
         view.addSubview(calloutview)
