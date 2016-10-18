@@ -18,17 +18,13 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-24-zo1" customClass="DOFavoriteButton" customModule="Breadcrumbs_2_0" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-24-zo1">
                     <constraints>
                         <constraint firstAttribute="width" secondItem="fRz-24-zo1" secondAttribute="height" multiplier="1:1" id="pyV-E2-GA8"/>
                         <constraint firstAttribute="width" constant="30" id="q0Z-uL-EtS"/>
                     </constraints>
+                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Button" image="up"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
-                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="upTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="rNd-w5-Mut"/>
                     </connections>
@@ -38,11 +34,12 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Bm-ls-fSC" customClass="DOFavoriteButton" customModule="Breadcrumbs_2_0" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Bm-ls-fSC">
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="kJX-jT-vzK"/>
                         <constraint firstAttribute="width" secondItem="4Bm-ls-fSC" secondAttribute="height" multiplier="1:1" id="sOQ-aP-INk"/>
                     </constraints>
+                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Button" image="down"/>
                     <connections>
                         <action selector="downTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="QqM-rt-vED"/>
@@ -62,9 +59,10 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="downOutlet" destination="4Bm-ls-fSC" id="img-Tm-MAE"/>
+                <outlet property="downOutlet" destination="4Bm-ls-fSC" id="rKo-jQ-ww5"/>
                 <outlet property="messageLabel" destination="uc3-BJ-3nC" id="KMW-uR-jRa"/>
-                <outlet property="upOutlet" destination="fRz-24-zo1" id="m2W-Vq-8N1"/>
+                <outlet property="upOutlet" destination="fRz-24-zo1" id="gG4-i3-dpA"/>
+                <outlet property="upvotesLabel" destination="Flq-Ss-odX" id="jEd-JZ-tBz"/>
             </connections>
             <point key="canvasLocation" x="21" y="-232"/>
         </view>

@@ -10,32 +10,25 @@ import UIKit
 
 class CalloutView: UIView {
 
-    @IBOutlet weak var upOutlet: DOFavoriteButton!
-    @IBOutlet weak var downOutlet: DOFavoriteButton!
+    
+    @IBOutlet weak var upvotesLabel: UILabel!
+    @IBOutlet weak var upOutlet: UIButton!
+    @IBOutlet weak var downOutlet: UIButton!
     
     @IBAction func upTapped(_ sender: AnyObject) {
-        if !upOutlet.isSelected {
-            upOutlet.select()
-        } else {
-            upOutlet.deselect()
-        }
+        print("tapped up")
+        upOutlet.tintColor = UIColor.blue
+        
     }
     
     @IBAction func downTapped(_ sender: AnyObject) {
-        if !downOutlet.isSelected {
-            downOutlet.select()
-        } else {
-            downOutlet.deselect()
-        }
+        print("tapped down")
+        upOutlet.tintColor = UIColor.blue
     }
     
     
     @IBOutlet weak var messageLabel: UILabel!
     
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        print("Passing all touches to the next view (if any), in the view stack.")
-        return true
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

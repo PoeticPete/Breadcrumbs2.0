@@ -42,6 +42,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         point.message = "First message"
         self.map.addAnnotation(point)
         
+        let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
+        let calloutview = views![0] as! CalloutView
+        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.width / 2)
+        calloutview.backgroundColor = UIColor.green
+        calloutview.layer.cornerRadius = 20
+        calloutview.layer.masksToBounds = true
+
+//        view.addSubview(calloutview)
+        
+        
     }
     
     
@@ -66,11 +76,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
         setCurrentLocationName()
         print("UPDATED \(location)")
-
     }
-    
 
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("failllleeeddd\n")
         print(error)
@@ -108,6 +115,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Don't proceed with custom callout
             return
         }
+        mapView.setCenter((view.annotation?.coordinate)!, animated: false)
+        
         var annotation = view.annotation as! CustomAnnotation
         let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
         let calloutview = views![0] as! CalloutView
@@ -115,36 +124,48 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
         
-        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
+//        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
+        calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.65)
         calloutview.alpha = 0.0
         calloutview.backgroundColor = themeColor
         calloutview.isUserInteractionEnabled = true
         
-        //-------------------------------optional stuff------------------------------
-        print(calloutview.frame)
-
-        //-------------------------------------------------------------------------------
         
-//        calloutview.frame = CGRect(x: Double(calloutview.center.x - 330/2), y: Double(calloutview.center.y - 230/2), width: 330.0, height: 230.0)
-        view.addSubview(calloutview)
+        self.view.addSubview(calloutview)
         UIView.animate(withDuration: 0.4, animations: {
             calloutview.alpha = 1.0
         })
-        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
         
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        for subview in self.view.subviews
+        {
+            clearCallouts()
+            map.selectedAnnotations.removeAll()
+
+        }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         if view.isKind(of: AnnotationView.self)
         {
-            for subview in view.subviews
-            {
+            clearCallouts()
+        }
+    }
+    
+    func clearCallouts() {
+        for subview in self.view.subviews
+        {
+            if subview.isKind(of: CalloutView.self) {
                 UIView.animate(withDuration: 0.4, animations: {
                     subview.alpha = 0.0
                     }, completion: { void in
                         subview.removeFromSuperview()
                 })
             }
+            
         }
     }
     
