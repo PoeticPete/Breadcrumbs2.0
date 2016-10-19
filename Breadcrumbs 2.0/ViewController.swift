@@ -170,7 +170,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("IN VIEW FOR ANNOTATION")
         if annotation is MKUserLocation
         {
             return nil
@@ -182,7 +181,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         } else{
             annotationView?.annotation = annotation
         }
-        annotationView!.image = flatAnnotationImage.imageWithColor(color1: themeColor)
+        let thisAnnotation = annotation as! CustomAnnotation
+        print(thisAnnotation.upVotes)
+        
+        annotationView!.image = flatAnnotationImage.imageWithColor(color1: getColor(thisAnnotation.upVotes))
         return annotationView
     }
     
@@ -205,7 +207,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 dropPin.message = trimmedString
                 print(self.currentLocation.coordinate)
                 self.setMessage(loc: self.currentLocation, message: trimmedString)
-                self.map.addAnnotation(dropPin)
+                self.getLocalMessages()
+//                self.map.addAnnotation(dropPin)
             }
             self.alert.textFields![0].text = ""
             
