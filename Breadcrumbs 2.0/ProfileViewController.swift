@@ -12,6 +12,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var crumbsTableView: UITableView!
     @IBOutlet weak var profileDescriptionView: UIView!
 
+    @IBOutlet weak var statsLabel: UILabel!
+    
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var headerHeight: NSLayoutConstraint!
     
@@ -23,8 +25,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        statsLabel.adjustsFontSizeToFitWidth = true
         // somehow the profileDescriptView's height was 1000, changed below
-        profileDescriptionView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 136.0)
+        profileDescriptionView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 100.0)
         crumbsTableView.tableHeaderView = profileDescriptionView
         //crumbsTableView.contentInset = UIEdgeInsetsMake(-500, 0, 0, 0);
         // Do any additional setup after loading the view.
