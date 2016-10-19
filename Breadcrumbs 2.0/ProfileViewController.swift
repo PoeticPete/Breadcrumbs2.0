@@ -22,7 +22,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // somehow the profileDescriptView's height was 1000, changed below
+        profileDescriptionView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 136.0)
         crumbsTableView.tableHeaderView = profileDescriptionView
         //crumbsTableView.contentInset = UIEdgeInsetsMake(-500, 0, 0, 0);
         // Do any additional setup after loading the view.
@@ -32,7 +34,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillAppear(animated)
         self.headerHeight.constant = self.maxHeaderHeight
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
         
@@ -112,10 +114,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.profilePic.alpha = percentage
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     //Table view methods:
     
@@ -134,7 +132,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.leastNormalMagnitude
+        return 0.0
+//        return CGFloat.leastNormalMagnitude
     }
     
     //end table view methods
