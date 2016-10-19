@@ -25,10 +25,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        crumbsTableView.rowHeight = 180
+        
         statsLabel.adjustsFontSizeToFitWidth = true
         // somehow the profileDescriptView's height was 1000, changed below
         profileDescriptionView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 100.0)
         crumbsTableView.tableHeaderView = profileDescriptionView
+        crumbsTableView.tableHeaderView?.alpha = 0.95
         //crumbsTableView.contentInset = UIEdgeInsetsMake(-500, 0, 0, 0);
         // Do any additional setup after loading the view.
     }
@@ -130,9 +133,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.crumbsTableView.dequeueReusableCell(withIdentifier: "ProfCell") as! ProfileTableViewCell
+        
+        
+        //next step is loading this info from firebase!
         cell.changeTitle(newTitle: "Cell \(indexPath.row)")
         cell.changeDescription(newDesc: "test description yo! this is a really long line that will need a line break, so let's make sure that works! long descriptions should not be allowed in the final project. possibly character limit.")
         cell.changeLocation(newLocation: "Some GPS Coordinates or location name that the person put in")
+        cell.changeScore(newScore: 52)
+        cell.changeIMG(newIMG: UIImage.init(named: "map-marker")!)
         return cell
     }
     

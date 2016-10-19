@@ -15,6 +15,7 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var crumbLocationLabel: UILabel!
     @IBOutlet weak var crumbDescriptionLabel: UILabel!
     
+    @IBOutlet weak var scoreLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -42,4 +43,18 @@ class ProfileTableViewCell: UITableViewCell {
         imgView.image = newIMG
     }
 
+    func changeScore(newScore: Int){
+        if(newScore>0){
+            scoreLabel.textColor = UIColor.green
+            scoreLabel.text = "+\(newScore)"
+        }
+        else if(newScore<0){
+            scoreLabel.textColor = UIColor.red
+            scoreLabel.text = "-\(newScore)"
+        }
+        else{
+            scoreLabel.textColor = UIColor.black
+            scoreLabel.text = "\(newScore)"
+        }
+    }
 }
