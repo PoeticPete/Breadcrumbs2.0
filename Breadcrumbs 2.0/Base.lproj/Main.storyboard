@@ -89,7 +89,7 @@
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bEC-eJ-y6n">
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DGZ-R2-keR">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down" translatesAutoresizingMaskIntoConstraints="NO" id="DGZ-R2-keR">
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="DGZ-R2-keR" secondAttribute="height" multiplier="1:1" id="SgN-5O-fEz"/>
                                             <constraint firstAttribute="height" constant="120" id="iic-uH-FER"/>
@@ -101,7 +101,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Stats label! this can briefly say favorite places, time joined, number of crumbs, etc" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iD-KK-sSQ">
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -109,6 +109,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="136" id="1Mz-Pm-xZj"/>
+                                    <constraint firstAttribute="trailing" secondItem="0iD-KK-sSQ" secondAttribute="trailing" constant="8" id="3cQ-rk-hjx"/>
                                     <constraint firstAttribute="trailing" secondItem="M9V-xy-vnC" secondAttribute="trailing" constant="8" id="BD8-NA-ugP"/>
                                     <constraint firstItem="DGZ-R2-keR" firstAttribute="top" secondItem="bEC-eJ-y6n" secondAttribute="top" constant="8" id="ErO-Ol-WaE"/>
                                     <constraint firstAttribute="bottom" secondItem="DGZ-R2-keR" secondAttribute="bottom" constant="8" id="SMr-yQ-y3s"/>
@@ -116,7 +117,6 @@
                                     <constraint firstItem="M9V-xy-vnC" firstAttribute="leading" secondItem="DGZ-R2-keR" secondAttribute="trailing" constant="8" id="cE8-jT-vbc"/>
                                     <constraint firstItem="0iD-KK-sSQ" firstAttribute="leading" secondItem="DGZ-R2-keR" secondAttribute="trailing" constant="8" id="dZC-I9-ifz"/>
                                     <constraint firstAttribute="bottom" secondItem="0iD-KK-sSQ" secondAttribute="bottom" constant="8" id="kIv-Gg-KBp"/>
-                                    <constraint firstAttribute="trailing" secondItem="0iD-KK-sSQ" secondAttribute="trailing" constant="8" id="lLD-Fy-4mb"/>
                                     <constraint firstItem="M9V-xy-vnC" firstAttribute="top" secondItem="bEC-eJ-y6n" secondAttribute="top" constant="8" id="p5S-9m-Fjk"/>
                                     <constraint firstItem="DGZ-R2-keR" firstAttribute="leading" secondItem="bEC-eJ-y6n" secondAttribute="leading" constant="8" id="r3k-rh-Ui7"/>
                                 </constraints>
@@ -127,10 +127,11 @@
                             <constraint firstItem="5W3-dQ-Q6X" firstAttribute="top" secondItem="e35-92-Aen" secondAttribute="top" id="89e-0w-a2f"/>
                             <constraint firstItem="bEC-eJ-y6n" firstAttribute="top" secondItem="hEw-vP-6RV" secondAttribute="bottom" id="EjA-x1-hdQ"/>
                             <constraint firstItem="vd4-Xq-mQB" firstAttribute="top" secondItem="5W3-dQ-Q6X" secondAttribute="bottom" id="FSS-HO-fOa"/>
-                            <constraint firstItem="5W3-dQ-Q6X" firstAttribute="trailing" secondItem="bEC-eJ-y6n" secondAttribute="trailing" id="GvU-U1-L3N"/>
                             <constraint firstAttribute="trailing" secondItem="5W3-dQ-Q6X" secondAttribute="trailing" id="Jr9-0i-weO"/>
                             <constraint firstItem="5W3-dQ-Q6X" firstAttribute="leading" secondItem="bEC-eJ-y6n" secondAttribute="leading" id="Lgn-Qy-1uR"/>
+                            <constraint firstAttribute="trailing" secondItem="5W3-dQ-Q6X" secondAttribute="trailing" id="UhD-6V-KGa"/>
                             <constraint firstItem="5W3-dQ-Q6X" firstAttribute="leading" secondItem="e35-92-Aen" secondAttribute="leading" id="wm9-06-0VQ"/>
+                            <constraint firstAttribute="trailing" secondItem="bEC-eJ-y6n" secondAttribute="trailing" id="zyS-ie-mwK"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Me" id="HOU-DQ-bSs"/>
@@ -140,6 +141,7 @@
                         <outlet property="headerHeight" destination="1Mz-Pm-xZj" id="POZ-qj-FGM"/>
                         <outlet property="profileDescriptionView" destination="bEC-eJ-y6n" id="rOV-Hp-goy"/>
                         <outlet property="profilePic" destination="DGZ-R2-keR" id="RI6-0n-mtD"/>
+                        <outlet property="statsLabel" destination="0iD-KK-sSQ" id="DPp-gG-CNU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cgV-16-tfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -182,4 +184,7 @@
             <point key="canvasLocation" x="-588" y="118"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="down" width="44" height="44"/>
+    </resources>
 </document>
