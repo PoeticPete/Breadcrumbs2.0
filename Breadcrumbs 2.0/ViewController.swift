@@ -109,16 +109,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
         let calloutview = views![0] as! CalloutView
         calloutview.layer.cornerRadius = 20
+        calloutview.layer.borderWidth = 5.0
+        calloutview.layer.borderColor = themeColor.cgColor
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
         calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
         calloutview.key = annotation.key
         calloutview.annotation = annotation
+        if myVotes[calloutview.key] == 1 {
+            calloutview.upSelected = true
+            calloutview.upOutlet.tintColor = themeColor
+        } else if myVotes[calloutview.key] == -1 {
+            calloutview.downSelected = true
+            calloutview.downOutlet.tintColor = themeColor
+        }
         
 //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
         calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
         calloutview.alpha = 0.0
-        calloutview.backgroundColor = themeColor
+        calloutview.backgroundColor = UIColor.white
         calloutview.isUserInteractionEnabled = true
         
         

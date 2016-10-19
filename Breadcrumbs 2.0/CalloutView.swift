@@ -33,12 +33,15 @@ class CalloutView: UIView {
             currLikes -= 1
             vote(-1)
             annotation.upVotes = annotation.upVotes - 1
-            
+            myVotes[key] = nil
+            myVotesRef.child(deviceID).child(key).removeValue()
         } else {
-            upOutlet.tintColor = UIColor.blue
+            upOutlet.tintColor = themeColor
             currLikes += 1
             vote(1)
             annotation.upVotes = annotation.upVotes + 1
+            myVotes[key] = 1
+            myVotesRef.child(deviceID).child(key).setValue(1)
         }
         upvotesLabel.text = "\(currLikes)"
         upSelected = !upSelected
@@ -57,12 +60,15 @@ class CalloutView: UIView {
             currLikes += 1
             vote(1)
             annotation.upVotes = annotation.upVotes + 1
-            
+            myVotes[key] = nil
+            myVotesRef.child(deviceID).child(key).removeValue()
         } else {
-            downOutlet.tintColor = UIColor.blue
+            downOutlet.tintColor = themeColor
             currLikes -= 1
             vote(-1)
             annotation.upVotes = annotation.upVotes - 1
+            myVotes[key] = -1
+            myVotesRef.child(deviceID).child(key).setValue(-1)
         }
         upvotesLabel.text = "\(currLikes)"
         downSelected = !downSelected
@@ -91,7 +97,7 @@ class CalloutView: UIView {
             currentData.value = value! + i
             return FIRTransactionResult.success(withValue: currentData)
         }
-        myVotesRef.child(deviceID).child(key).setValue(i)
+        
     }
     /*
     // Only override draw() if you perform custom drawing.
