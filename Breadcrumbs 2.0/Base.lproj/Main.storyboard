@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -80,8 +81,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5W3-dQ-Q6X">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5W3-dQ-Q6X">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfCell" rowHeight="120" id="IDQ-AC-oDX" customClass="ProfileTableViewCell" customModule="Breadcrumbs_2_0" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="120"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IDQ-AC-oDX" id="pfY-4v-qH2">
+                                            <frame key="frameInset" width="375" height="119"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Crumb description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qw1-Un-EIy">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Crumb Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y81-gl-HMZ">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="2qb-bD-Nxe"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Crumb Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVq-UI-CrW">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MF6-AZ-jHT">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="MF6-AZ-jHT" secondAttribute="height" multiplier="1:1" id="WRn-GD-MNn"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qw1-Un-EIy" firstAttribute="leading" secondItem="MF6-AZ-jHT" secondAttribute="trailing" constant="8" id="182-gE-Qap"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="qw1-Un-EIy" secondAttribute="bottom" constant="8" id="78b-75-oRm"/>
+                                                <constraint firstAttribute="bottom" secondItem="MF6-AZ-jHT" secondAttribute="bottom" id="7Ku-9F-cTe"/>
+                                                <constraint firstItem="bVq-UI-CrW" firstAttribute="leading" secondItem="MF6-AZ-jHT" secondAttribute="trailing" constant="8" id="7xj-1S-HgK"/>
+                                                <constraint firstItem="qw1-Un-EIy" firstAttribute="top" secondItem="bVq-UI-CrW" secondAttribute="bottom" constant="8" id="BQb-ez-UXr"/>
+                                                <constraint firstAttribute="trailing" secondItem="qw1-Un-EIy" secondAttribute="trailing" constant="8" id="EXP-eQ-kse"/>
+                                                <constraint firstItem="MF6-AZ-jHT" firstAttribute="leading" secondItem="pfY-4v-qH2" secondAttribute="leading" id="Ezh-pD-Ist"/>
+                                                <constraint firstItem="bVq-UI-CrW" firstAttribute="trailing" secondItem="pfY-4v-qH2" secondAttribute="trailingMargin" id="M9i-1o-WhA"/>
+                                                <constraint firstItem="bVq-UI-CrW" firstAttribute="top" secondItem="Y81-gl-HMZ" secondAttribute="bottom" constant="8" id="PbU-te-W7F"/>
+                                                <constraint firstItem="Y81-gl-HMZ" firstAttribute="top" secondItem="pfY-4v-qH2" secondAttribute="topMargin" id="Qg0-KA-gOi"/>
+                                                <constraint firstItem="MF6-AZ-jHT" firstAttribute="top" secondItem="pfY-4v-qH2" secondAttribute="top" id="b6n-Bm-rmC"/>
+                                                <constraint firstItem="Y81-gl-HMZ" firstAttribute="leading" secondItem="MF6-AZ-jHT" secondAttribute="trailing" constant="8" id="s9I-jy-mFp"/>
+                                                <constraint firstItem="Y81-gl-HMZ" firstAttribute="trailing" secondItem="pfY-4v-qH2" secondAttribute="trailingMargin" id="sFK-w3-9rx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="crumbDescriptionLabel" destination="qw1-Un-EIy" id="tvF-wD-zWd"/>
+                                            <outlet property="crumbLocationLabel" destination="bVq-UI-CrW" id="5nw-Dy-GCm"/>
+                                            <outlet property="crumbTitleLabel" destination="Y81-gl-HMZ" id="Wp7-ve-nnp"/>
+                                            <outlet property="imgView" destination="MF6-AZ-jHT" id="X5F-qn-KR5"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="M4j-dY-XIC" id="Xnr-HR-X0l"/>
                                     <outlet property="delegate" destination="M4j-dY-XIC" id="f5A-iM-jCM"/>
@@ -124,12 +181,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5W3-dQ-Q6X" firstAttribute="top" secondItem="e35-92-Aen" secondAttribute="top" id="89e-0w-a2f"/>
                             <constraint firstItem="bEC-eJ-y6n" firstAttribute="top" secondItem="hEw-vP-6RV" secondAttribute="bottom" id="EjA-x1-hdQ"/>
                             <constraint firstItem="vd4-Xq-mQB" firstAttribute="top" secondItem="5W3-dQ-Q6X" secondAttribute="bottom" id="FSS-HO-fOa"/>
-                            <constraint firstAttribute="trailing" secondItem="5W3-dQ-Q6X" secondAttribute="trailing" id="Jr9-0i-weO"/>
                             <constraint firstItem="5W3-dQ-Q6X" firstAttribute="leading" secondItem="bEC-eJ-y6n" secondAttribute="leading" id="Lgn-Qy-1uR"/>
                             <constraint firstAttribute="trailing" secondItem="5W3-dQ-Q6X" secondAttribute="trailing" id="UhD-6V-KGa"/>
+                            <constraint firstItem="5W3-dQ-Q6X" firstAttribute="top" secondItem="e35-92-Aen" secondAttribute="top" id="mi6-0q-apf"/>
                             <constraint firstItem="5W3-dQ-Q6X" firstAttribute="leading" secondItem="e35-92-Aen" secondAttribute="leading" id="wm9-06-0VQ"/>
                             <constraint firstAttribute="trailing" secondItem="bEC-eJ-y6n" secondAttribute="trailing" id="zyS-ie-mwK"/>
                         </constraints>

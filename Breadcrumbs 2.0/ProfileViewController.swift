@@ -129,8 +129,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel!.text = "Cell \(indexPath.row)"
+        let cell = self.crumbsTableView.dequeueReusableCell(withIdentifier: "ProfCell") as! ProfileTableViewCell
+        cell.changeTitle(newTitle: "Cell \(indexPath.row)")
+        cell.changeDescription(newDesc: "test description yo! this is a really long line that will need a line break, so let's make sure that works! long descriptions should not be allowed in the final project. possibly character limit.")
+        cell.changeLocation(newLocation: "Some GPS Coordinates or location name that the person put in")
         return cell
     }
     
