@@ -110,7 +110,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let calloutview = views![0] as! CalloutView
         calloutview.layer.cornerRadius = 20
         calloutview.layer.borderWidth = 5.0
-        calloutview.layer.borderColor = themeColor.cgColor
+        calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
         calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
@@ -118,10 +118,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.annotation = annotation
         if myVotes[calloutview.key] == 1 {
             calloutview.upSelected = true
-            calloutview.upOutlet.tintColor = themeColor
+            calloutview.upOutlet.tintColor = getColor(annotation.upVotes!)
         } else if myVotes[calloutview.key] == -1 {
             calloutview.downSelected = true
-            calloutview.downOutlet.tintColor = themeColor
+            calloutview.downOutlet.tintColor = getColor(annotation.upVotes!)
         }
         
 //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)

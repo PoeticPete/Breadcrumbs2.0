@@ -36,7 +36,7 @@ class CalloutView: UIView {
             myVotes[key] = nil
             myVotesRef.child(deviceID).child(key).removeValue()
         } else {
-            upOutlet.tintColor = themeColor
+            upOutlet.tintColor = getColor(Int(upvotesLabel.text!)!)
             currLikes += 1
             vote(1)
             annotation.upVotes = annotation.upVotes + 1
@@ -63,7 +63,7 @@ class CalloutView: UIView {
             myVotes[key] = nil
             myVotesRef.child(deviceID).child(key).removeValue()
         } else {
-            downOutlet.tintColor = themeColor
+            downOutlet.tintColor = getColor(Int(upvotesLabel.text!)!)
             currLikes -= 1
             vote(-1)
             annotation.upVotes = annotation.upVotes - 1
