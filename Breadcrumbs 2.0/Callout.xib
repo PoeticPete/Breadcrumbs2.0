@@ -10,7 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CalloutView" customModule="Breadcrumbs_2_0" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="330" height="230"/>
+            <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc3-BJ-3nC">
@@ -51,9 +51,9 @@
                 <constraint firstItem="4Bm-ls-fSC" firstAttribute="centerX" secondItem="Flq-Ss-odX" secondAttribute="centerX" id="0oQ-oB-dr8"/>
                 <constraint firstItem="4Bm-ls-fSC" firstAttribute="top" secondItem="Flq-Ss-odX" secondAttribute="bottom" constant="8" id="2VW-C0-rz9"/>
                 <constraint firstItem="uc3-BJ-3nC" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="2ke-NC-5Ci"/>
+                <constraint firstAttribute="trailing" secondItem="fRz-24-zo1" secondAttribute="trailing" constant="20" id="6fu-Qe-hRm"/>
                 <constraint firstItem="Flq-Ss-odX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FYW-2Y-fjX"/>
                 <constraint firstItem="Flq-Ss-odX" firstAttribute="top" secondItem="fRz-24-zo1" secondAttribute="bottom" constant="8" id="OY9-1L-s6B"/>
-                <constraint firstAttribute="trailing" secondItem="Flq-Ss-odX" secondAttribute="trailing" constant="20" id="RSP-fP-kHK"/>
                 <constraint firstItem="uc3-BJ-3nC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dYC-tD-vgB"/>
                 <constraint firstItem="fRz-24-zo1" firstAttribute="centerX" secondItem="Flq-Ss-odX" secondAttribute="centerX" id="mLb-tu-jOj"/>
             </constraints>
