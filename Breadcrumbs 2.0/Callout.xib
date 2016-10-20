@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +15,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc3-BJ-3nC">
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -30,7 +31,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flq-Ss-odX">
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -45,6 +46,17 @@
                         <action selector="downTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="QqM-rt-vED"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yT-0B-X5x">
+                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                    <state key="normal" title="More">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timestamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DuR-g4-F0w">
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -52,15 +64,23 @@
                 <constraint firstItem="4Bm-ls-fSC" firstAttribute="top" secondItem="Flq-Ss-odX" secondAttribute="bottom" constant="8" id="2VW-C0-rz9"/>
                 <constraint firstItem="uc3-BJ-3nC" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="2ke-NC-5Ci"/>
                 <constraint firstAttribute="trailing" secondItem="fRz-24-zo1" secondAttribute="trailing" constant="20" id="6fu-Qe-hRm"/>
+                <constraint firstAttribute="trailing" secondItem="4yT-0B-X5x" secondAttribute="trailing" id="9Hp-FW-uT7"/>
                 <constraint firstItem="Flq-Ss-odX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FYW-2Y-fjX"/>
                 <constraint firstItem="Flq-Ss-odX" firstAttribute="top" secondItem="fRz-24-zo1" secondAttribute="bottom" constant="8" id="OY9-1L-s6B"/>
+                <constraint firstItem="4yT-0B-X5x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ule-ob-iLa"/>
                 <constraint firstItem="uc3-BJ-3nC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dYC-tD-vgB"/>
+                <constraint firstItem="4yT-0B-X5x" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.2" id="dyX-uW-VYJ"/>
                 <constraint firstItem="fRz-24-zo1" firstAttribute="centerX" secondItem="Flq-Ss-odX" secondAttribute="centerX" id="mLb-tu-jOj"/>
+                <constraint firstAttribute="bottom" secondItem="4yT-0B-X5x" secondAttribute="bottom" id="mxH-9W-Adu"/>
+                <constraint firstItem="DuR-g4-F0w" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ngl-hT-D5g"/>
+                <constraint firstItem="4yT-0B-X5x" firstAttribute="top" secondItem="DuR-g4-F0w" secondAttribute="bottom" constant="5" id="o28-jE-8eo"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="commentsButton" destination="4yT-0B-X5x" id="vvW-Fc-rSE"/>
                 <outlet property="downOutlet" destination="4Bm-ls-fSC" id="rKo-jQ-ww5"/>
                 <outlet property="messageLabel" destination="uc3-BJ-3nC" id="KMW-uR-jRa"/>
+                <outlet property="timestampLabel" destination="DuR-g4-F0w" id="oy7-dP-aDv"/>
                 <outlet property="upOutlet" destination="fRz-24-zo1" id="gG4-i3-dpA"/>
                 <outlet property="upvotesLabel" destination="Flq-Ss-odX" id="jEd-JZ-tBz"/>
             </connections>

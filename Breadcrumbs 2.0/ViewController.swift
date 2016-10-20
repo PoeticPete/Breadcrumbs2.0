@@ -123,6 +123,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             calloutview.downSelected = true
             calloutview.downOutlet.tintColor = getColor(annotation.upVotes!)
         }
+//        button.addTarget(self, action: "action:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        //then make a action method :
+
+        calloutview.commentsButton.addTarget(self, action: #selector(ViewController.action), for: UIControlEvents.touchUpInside)
+        calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
         
 //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
         calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
@@ -137,6 +143,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         })
         
         
+    }
+    
+    func action() {
+        self.performSegue(withIdentifier: "ShowPostSegue", sender: nil)
     }
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {

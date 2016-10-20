@@ -32,6 +32,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileDescriptionView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 100.0)
         crumbsTableView.tableHeaderView = profileDescriptionView
         crumbsTableView.tableHeaderView?.alpha = 0.95
+        navigationController?.hidesBarsOnSwipe = true
         //crumbsTableView.contentInset = UIEdgeInsetsMake(-500, 0, 0, 0);
         // Do any additional setup after loading the view.
     }

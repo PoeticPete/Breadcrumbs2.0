@@ -19,6 +19,7 @@ class CalloutView: UIView {
     @IBOutlet weak var upvotesLabel: UILabel!
     @IBOutlet weak var upOutlet: UIButton!
     @IBOutlet weak var downOutlet: UIButton!
+    @IBOutlet weak var timestampLabel: UILabel!
     
     @IBAction func upTapped(_ sender: AnyObject) {
         
@@ -78,15 +79,10 @@ class CalloutView: UIView {
     
     @IBOutlet weak var messageLabel: UILabel!
     
-//    init() {
-//        if myVotes[key] == 1 {
-//            upSelected = true
-//            upOutlet.tintColor = UIColor.blue
-//        } else if myVotes[key] == -1 {
-//            downSelected = true
-//            upOutlet.tintColor = UIColor.lightGray
-//        }
-//    }
+    
+    @IBOutlet weak var commentsButton: UIButton!
+
+    
     
     func vote(_ i: Int) {
         allPostsRef.child(key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in
@@ -99,13 +95,6 @@ class CalloutView: UIView {
         }
         
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
+
 
 }

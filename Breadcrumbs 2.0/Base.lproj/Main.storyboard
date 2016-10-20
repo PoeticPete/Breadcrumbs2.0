@@ -46,17 +46,36 @@
                     </navigationItem>
                     <connections>
                         <outlet property="map" destination="XGe-a6-n1b" id="PkK-44-KlH"/>
+                        <segue destination="u0V-Ru-rgA" kind="show" identifier="ShowPostSegue" id="JD1-GX-4QB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="118.29085457271366"/>
         </scene>
-        <!--Me-->
+        <!--View Controller-->
+        <scene sceneID="wCR-CB-NJe">
+            <objects>
+                <viewController id="u0V-Ru-rgA" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j8c-na-7aA"/>
+                        <viewControllerLayoutGuide type="bottom" id="flk-RJ-qtM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3r7-wR-hEe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.64718632519999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bju-Za-k2c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="885" y="120"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="a4R-Bw-HJK">
             <objects>
                 <navigationController id="gfW-8t-dwe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Me" id="8im-Rb-C2c"/>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="8im-Rb-C2c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Utp-4h-6ph">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -81,15 +100,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5W3-dQ-Q6X">
-                                <frame key="frameInset" minY="239" width="375" height="379"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5W3-dQ-Q6X">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfCell" rowHeight="180" id="IDQ-AC-oDX" customClass="ProfileTableViewCell" customModule="Breadcrumbs_2_0" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="375" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IDQ-AC-oDX" id="pfY-4v-qH2">
-                                            <frame key="frameInset" width="375" height="179.5"/>
+                                            <frame key="frameInset" width="375" height="179"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Crumb description!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qw1-Un-EIy">
@@ -198,7 +216,7 @@
                             <constraint firstAttribute="trailing" secondItem="bEC-eJ-y6n" secondAttribute="trailing" id="zyS-ie-mwK"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Me" id="HOU-DQ-bSs"/>
+                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="HOU-DQ-bSs"/>
                     <navigationItem key="navigationItem" title="My profile" id="cO3-et-Ml4"/>
                     <connections>
                         <outlet property="crumbsTableView" destination="5W3-dQ-Q6X" id="WnK-ey-BFS"/>
@@ -230,11 +248,11 @@
             </objects>
             <point key="canvasLocation" x="-1524" y="312"/>
         </scene>
-        <!--Map-->
+        <!--Navigation Controller-->
         <scene sceneID="5wX-ic-U4d">
             <objects>
                 <navigationController id="jyb-Da-pdX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="7rv-us-WHd"/>
+                    <tabBarItem key="tabBarItem" selectedImage="map-marker" systemItem="featured" id="7rv-us-WHd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uxP-XZ-S8f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -250,5 +268,6 @@
     </scenes>
     <resources>
         <image name="down" width="44" height="44"/>
+        <image name="map-marker" width="44" height="44"/>
     </resources>
 </document>
