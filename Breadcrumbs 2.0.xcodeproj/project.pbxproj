@@ -28,6 +28,9 @@
 		86734D671DB1B76000195E42 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 86734D601DB1B76000195E42 /* GFQuery.m */; };
 		86734D6A1DB1B89500195E42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86734D691DB1B89500195E42 /* GoogleService-Info.plist */; };
 		86734D6C1DB1D11500195E42 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86734D6B1DB1D11500195E42 /* MapKit.framework */; };
+		86BD85441DBA857E00A6DF6D /* libCloudinary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BD85431DBA857E00A6DF6D /* libCloudinary.a */; };
+		86BD85711DBA864F00A6DF6D /* TestVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD85701DBA864F00A6DF6D /* TestVCViewController.swift */; };
+		86BD85731DBA86ED00A6DF6D /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD85721DBA86ED00A6DF6D /* UploadViewController.swift */; };
 		F7188C827BAC42986DE1B3D1 /* Pods_Breadcrumbs_2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE22450085868D298AAAE23F /* Pods_Breadcrumbs_2_0.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +70,15 @@
 		86734D621DB1B76000195E42 /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
 		86734D691DB1B89500195E42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86734D6B1DB1D11500195E42 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		86BD85431DBA857E00A6DF6D /* libCloudinary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCloudinary.a; sourceTree = "<group>"; };
+		86BD85451DBA85A200A6DF6D /* CLCloudinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLCloudinary.h; sourceTree = "<group>"; };
+		86BD85461DBA85A200A6DF6D /* CLEagerTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLEagerTransformation.h; sourceTree = "<group>"; };
+		86BD85471DBA85A200A6DF6D /* CLLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLLayer.h; sourceTree = "<group>"; };
+		86BD85481DBA85A200A6DF6D /* Cloudinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cloudinary.h; sourceTree = "<group>"; };
+		86BD85491DBA85A200A6DF6D /* CLTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTransformation.h; sourceTree = "<group>"; };
+		86BD854A1DBA85A200A6DF6D /* CLUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLUploader.h; sourceTree = "<group>"; };
+		86BD85701DBA864F00A6DF6D /* TestVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVCViewController.swift; sourceTree = "<group>"; };
+		86BD85721DBA86ED00A6DF6D /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		DE22450085868D298AAAE23F /* Pods_Breadcrumbs_2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Breadcrumbs_2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -75,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86BD85441DBA857E00A6DF6D /* libCloudinary.a in Frameworks */,
 				86734D6C1DB1D11500195E42 /* MapKit.framework in Frameworks */,
 				F7188C827BAC42986DE1B3D1 /* Pods_Breadcrumbs_2_0.framework in Frameworks */,
 			);
@@ -95,6 +108,7 @@
 		46FF1CA6CF466582E85C8E95 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				86BD85431DBA857E00A6DF6D /* libCloudinary.a */,
 				86734D6B1DB1D11500195E42 /* MapKit.framework */,
 				DE22450085868D298AAAE23F /* Pods_Breadcrumbs_2_0.framework */,
 			);
@@ -104,6 +118,7 @@
 		86734CF61DB1771900195E42 = {
 			isa = PBXGroup;
 			children = (
+				86BD854B1DBA85A800A6DF6D /* Cloudinary */,
 				86734D681DB1B7AE00195E42 /* GeoFire */,
 				86734D011DB1771900195E42 /* Breadcrumbs 2.0 */,
 				86734D001DB1771900195E42 /* Products */,
@@ -124,6 +139,9 @@
 		86734D011DB1771900195E42 /* Breadcrumbs 2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				86734D061DB1771900195E42 /* Main.storyboard */,
+				86BD85721DBA86ED00A6DF6D /* UploadViewController.swift */,
+				86BD85701DBA864F00A6DF6D /* TestVCViewController.swift */,
 				864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */,
 				8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */,
 				86734D021DB1771900195E42 /* AppDelegate.swift */,
@@ -131,7 +149,6 @@
 				864361641DB572BD00F3E6C0 /* Extensions.swift */,
 				864361661DB57C0E00F3E6C0 /* Global.swift */,
 				8643615A1DB544E600F3E6C0 /* AnnotationView.swift */,
-				86734D061DB1771900195E42 /* Main.storyboard */,
 				1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */,
 				1F69D24A1DB7F7B100E54536 /* ProfileTableViewCell.swift */,
 				86734D091DB1771900195E42 /* Assets.xcassets */,
@@ -163,6 +180,19 @@
 				86734D611DB1B76000195E42 /* GFQuery+Private.h */,
 			);
 			name = GeoFire;
+			sourceTree = "<group>";
+		};
+		86BD854B1DBA85A800A6DF6D /* Cloudinary */ = {
+			isa = PBXGroup;
+			children = (
+				86BD85451DBA85A200A6DF6D /* CLCloudinary.h */,
+				86BD85461DBA85A200A6DF6D /* CLEagerTransformation.h */,
+				86BD85471DBA85A200A6DF6D /* CLLayer.h */,
+				86BD85481DBA85A200A6DF6D /* Cloudinary.h */,
+				86BD85491DBA85A200A6DF6D /* CLTransformation.h */,
+				86BD854A1DBA85A200A6DF6D /* CLUploader.h */,
+			);
+			name = Cloudinary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86734D641DB1B76000195E42 /* GFBase32Utils.m in Sources */,
+				86BD85731DBA86ED00A6DF6D /* UploadViewController.swift in Sources */,
 				86734D051DB1771900195E42 /* ViewController.swift in Sources */,
 				8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */,
 				1F69D24B1DB7F7B100E54536 /* ProfileTableViewCell.swift in Sources */,
@@ -305,6 +336,7 @@
 				864361671DB57C0E00F3E6C0 /* Global.swift in Sources */,
 				86734D661DB1B76000195E42 /* GFGeoHashQuery.m in Sources */,
 				864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */,
+				86BD85711DBA864F00A6DF6D /* TestVCViewController.swift in Sources */,
 				8643616A1DB5A6DF00F3E6C0 /* DOFavoriteButton.swift in Sources */,
 				86734D671DB1B76000195E42 /* GFQuery.m in Sources */,
 			);
@@ -432,6 +464,10 @@
 				DEVELOPMENT_TEAM = 2LUBQ2MTN3;
 				INFOPLIST_FILE = "Breadcrumbs 2.0/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.PoeticPete.Breadcrumbs-2-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Breadcrumbs 2.0-Bridging-Header.h";
@@ -449,6 +485,10 @@
 				DEVELOPMENT_TEAM = 2LUBQ2MTN3;
 				INFOPLIST_FILE = "Breadcrumbs 2.0/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.PoeticPete.Breadcrumbs-2-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Breadcrumbs 2.0-Bridging-Header.h";
