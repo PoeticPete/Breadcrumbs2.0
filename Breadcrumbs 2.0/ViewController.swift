@@ -20,6 +20,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var manager:CLLocationManager!
     var currentLocation:CLLocation!
     let alert = UIAlertController(title: "Drop a crumb", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+    let newAlert = NYAlertViewController()
     var flatAnnotationImage:UIImage!
     
     override func viewDidLoad() {
@@ -45,16 +46,59 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     @IBAction func composeTapped(_ sender: AnyObject) {
         manager.requestLocation()
-        self.present(alert, animated: true, completion: nil)
+        
+        
+        
+        let alertViewController = NYAlertViewController()
+        
+        // Set a title and message
+        alertViewController.title = "Custom UI"
+        alertViewController.message = "Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
+        
+        // Customize appearance as desired
+        alertViewController.buttonCornerRadius = 20.0
+        alertViewController.view.tintColor = self.view.tintColor
+        
+        alertViewController.titleFont = UIFont(name: "AvenirNext-Bold", size: 19.0)
+        alertViewController.messageFont = UIFont(name: "AvenirNext-Medium", size: 16.0)
+        alertViewController.cancelButtonTitleFont = UIFont(name: "AvenirNext-Medium", size: 16.0)
+        alertViewController.cancelButtonTitleFont = UIFont(name: "AvenirNext-Medium", size: 16.0)
+        
+        alertViewController.swipeDismissalGestureEnabled = true
+        alertViewController.backgroundTapDismissalGestureEnabled = true
+        
+        // Add alert actions
+        
+        let cancelAction = NYAlertAction(
+            title: "Done",
+            style: .cancel,
+            handler: { (action: NYAlertAction?) -> Void in
+                self.dismiss(animated: true, completion: nil)
+        }
+        )
+        alertViewController.addAction(cancelAction)
+        
+        let ok = NYAlertAction(
+            title: "OK",
+            style: .default,
+            handler: { (action: NYAlertAction?) -> Void in
+                self.dismiss(animated: true, completion: nil)
+        }
+        )
+        alertViewController.addAction(ok)
+        
+        self.present(alertViewController, animated: true, completion: nil)
+//        self.present(alert, animated: true, completion: nil)
     }
 
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         // get region
         let location = locations.last! as CLLocation
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        self.map.setRegion(region, animated: true)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.10, longitudeDelta: 0.10))
+        self.map.setRegion(region, animated: false)
         
         // set to Firebase
         let randomKey = FIRDatabase.database().reference().childByAutoId()
@@ -114,14 +158,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.layer.masksToBounds = true
         calloutview.messageLabel.text = annotation.message
         calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
-        calloutview.key = annotation.key
         calloutview.annotation = annotation
         calloutview.timestampLabel.text = timeAgoSinceDate(date: calloutview.annotation.timestamp, numericDates: true)
         
-        if myVotes[calloutview.key] == 1 {
+        if myVotes[annotation.key] == 1 {
             calloutview.upSelected = true
             calloutview.upOutlet.tintColor = getColor(annotation.upVotes!)
-        } else if myVotes[calloutview.key] == -1 {
+        } else if myVotes[annotation.key] == -1 {
             calloutview.downSelected = true
             calloutview.downOutlet.tintColor = getColor(annotation.upVotes!)
         }
@@ -181,6 +224,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        for view in views {
+            if (view.annotation?.isKind(of: MKUserLocation.self))! {
+                view.canShowCallout = false
+            }
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation
         {
@@ -203,31 +254,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     // --------------------------SETUP FUNCTIONS (CALLED IN VIEW DID LOAD)--------------------------
     func setupAlertView() {
-        alert.addTextField { (textfield) in
-            textfield.textColor = UIColor.darkText
+        
+        newAlert.addTextField { (textfield) in
+            textfield?.textColor = UIColor.darkText
         }
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-            print("OK PRESSED")
-            let textString = self.alert.textFields![0].text!
-            let trimmedString = textString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-            
-            if trimmedString == "" {
-                print("EMPTY")
-            } else {
-                let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
-                dropPin.message = trimmedString
-                print(self.currentLocation.coordinate)
-                self.setMessage(loc: self.currentLocation, message: trimmedString)
-                self.getLocalMessages()
-//                self.map.addAnnotation(dropPin)
-            }
-            self.alert.textFields![0].text = ""
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            print("CANCEL PRESSED")
-            self.alert.textFields![0].text = ""
-        }))
+        
+        
+//        alert.addTextField { (textfield) in
+//            textfield.textColor = UIColor.darkText
+//        }
+//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+//            print("OK PRESSED")
+//            let textString = self.alert.textFields![0].text!
+//            let trimmedString = textString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+//            
+//            if trimmedString == "" {
+//                print("EMPTY")
+//            } else {
+//                let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
+//                dropPin.message = trimmedString
+//                print(self.currentLocation.coordinate)
+//                self.setMessage(loc: self.currentLocation, message: trimmedString)
+//                self.getLocalMessages()
+////                self.map.addAnnotation(dropPin)
+//            }
+//            self.alert.textFields![0].text = ""
+//            
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+//            print("CANCEL PRESSED")
+//            self.alert.textFields![0].text = ""
+//        }))
     }
     
     
@@ -289,8 +346,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         point.timestamp = timestamp
         
         self.map.addAnnotation(point)
-    
-        
     }
     
     @IBAction func refreshTapped(_ sender: AnyObject) {

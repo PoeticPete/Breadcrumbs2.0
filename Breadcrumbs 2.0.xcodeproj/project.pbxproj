@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1F69D24B1DB7F7B100E54536 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F69D24A1DB7F7B100E54536 /* ProfileTableViewCell.swift */; };
 		1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */; };
+		860E53B21DC39E5A00B07CFB /* NYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 860E53AF1DC39E5A00B07CFB /* NYAlertView.m */; };
+		860E53B31DC39E5A00B07CFB /* NYAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860E53B11DC39E5A00B07CFB /* NYAlertViewController.m */; };
 		8643615B1DB544E600F3E6C0 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8643615A1DB544E600F3E6C0 /* AnnotationView.swift */; };
 		8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */; };
 		864361611DB56B6100F3E6C0 /* Callout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 864361601DB56B6100F3E6C0 /* Callout.xib */; };
@@ -39,6 +41,10 @@
 		1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		241ACCF900D0D175B53ED3C5 /* Pods-Breadcrumbs 2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breadcrumbs 2.0.release.xcconfig"; path = "Pods/Target Support Files/Pods-Breadcrumbs 2.0/Pods-Breadcrumbs 2.0.release.xcconfig"; sourceTree = "<group>"; };
 		4F64F958668F4AF79481A27A /* Pods-Breadcrumbs 2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Breadcrumbs 2.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Breadcrumbs 2.0/Pods-Breadcrumbs 2.0.debug.xcconfig"; sourceTree = "<group>"; };
+		860E53AE1DC39E5A00B07CFB /* NYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYAlertView.h; sourceTree = "<group>"; };
+		860E53AF1DC39E5A00B07CFB /* NYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYAlertView.m; sourceTree = "<group>"; };
+		860E53B01DC39E5A00B07CFB /* NYAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYAlertViewController.h; sourceTree = "<group>"; };
+		860E53B11DC39E5A00B07CFB /* NYAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYAlertViewController.m; sourceTree = "<group>"; };
 		8643615A1DB544E600F3E6C0 /* AnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		864361601DB56B6100F3E6C0 /* Callout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Callout.xib; sourceTree = "<group>"; };
@@ -115,11 +121,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		860E53B41DC39E6100B07CFB /* Custom Alert */ = {
+			isa = PBXGroup;
+			children = (
+				860E53AE1DC39E5A00B07CFB /* NYAlertView.h */,
+				860E53AF1DC39E5A00B07CFB /* NYAlertView.m */,
+				860E53B01DC39E5A00B07CFB /* NYAlertViewController.h */,
+				860E53B11DC39E5A00B07CFB /* NYAlertViewController.m */,
+			);
+			name = "Custom Alert";
+			path = "Breadcrumbs 2.0";
+			sourceTree = "<group>";
+		};
 		86734CF61DB1771900195E42 = {
 			isa = PBXGroup;
 			children = (
 				86BD854B1DBA85A800A6DF6D /* Cloudinary */,
 				86734D681DB1B7AE00195E42 /* GeoFire */,
+				860E53B41DC39E6100B07CFB /* Custom Alert */,
 				86734D011DB1771900195E42 /* Breadcrumbs 2.0 */,
 				86734D001DB1771900195E42 /* Products */,
 				2D439F303DF80888829DBCE7 /* Pods */,
@@ -330,6 +349,7 @@
 				864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */,
 				1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */,
 				86734D651DB1B76000195E42 /* GFGeoHash.m in Sources */,
+				860E53B21DC39E5A00B07CFB /* NYAlertView.m in Sources */,
 				86734D031DB1771900195E42 /* AppDelegate.swift in Sources */,
 				86734D631DB1B76000195E42 /* GeoFire.m in Sources */,
 				8643615B1DB544E600F3E6C0 /* AnnotationView.swift in Sources */,
@@ -338,6 +358,7 @@
 				864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */,
 				86BD85711DBA864F00A6DF6D /* TestVCViewController.swift in Sources */,
 				8643616A1DB5A6DF00F3E6C0 /* DOFavoriteButton.swift in Sources */,
+				860E53B31DC39E5A00B07CFB /* NYAlertViewController.m in Sources */,
 				86734D671DB1B76000195E42 /* GFQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

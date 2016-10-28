@@ -13,7 +13,6 @@ class CalloutView: UIView {
 
     var upSelected = false
     var downSelected = false
-    var key:String!
     var annotation:CustomAnnotation!
     
     @IBOutlet weak var upvotesLabel: UILabel!
@@ -34,15 +33,15 @@ class CalloutView: UIView {
             currLikes -= 1
             vote(-1)
             annotation.upVotes = annotation.upVotes - 1
-            myVotes[key] = nil
-            myVotesRef.child(deviceID).child(key).removeValue()
+            myVotes[annotation.key] = nil
+            myVotesRef.child(deviceID).child(annotation.key).removeValue()
         } else {
             upOutlet.tintColor = getColor(Int(upvotesLabel.text!)!)
             currLikes += 1
             vote(1)
             annotation.upVotes = annotation.upVotes + 1
-            myVotes[key] = 1
-            myVotesRef.child(deviceID).child(key).setValue(1)
+            myVotes[annotation.key] = 1
+            myVotesRef.child(deviceID).child(annotation.key).setValue(1)
         }
         upvotesLabel.text = "\(currLikes)"
         upSelected = !upSelected
@@ -61,15 +60,15 @@ class CalloutView: UIView {
             currLikes += 1
             vote(1)
             annotation.upVotes = annotation.upVotes + 1
-            myVotes[key] = nil
-            myVotesRef.child(deviceID).child(key).removeValue()
+            myVotes[annotation.key] = nil
+            myVotesRef.child(deviceID).child(annotation.key).removeValue()
         } else {
             downOutlet.tintColor = getColor(Int(upvotesLabel.text!)!)
             currLikes -= 1
             vote(-1)
             annotation.upVotes = annotation.upVotes - 1
-            myVotes[key] = -1
-            myVotesRef.child(deviceID).child(key).setValue(-1)
+            myVotes[annotation.key] = -1
+            myVotesRef.child(deviceID).child(annotation.key).setValue(-1)
         }
         upvotesLabel.text = "\(currLikes)"
         downSelected = !downSelected
@@ -85,7 +84,7 @@ class CalloutView: UIView {
     
     
     func vote(_ i: Int) {
-        allPostsRef.child(key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in
+        allPostsRef.child(annotation.key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in
             var value = currentData.value as? Int
             if value == nil {
                 value = 0

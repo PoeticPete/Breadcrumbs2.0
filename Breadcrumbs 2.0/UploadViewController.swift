@@ -9,6 +9,7 @@ class UploadViewController: UIViewController,CLUploaderDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         capturedImage.image = image
 //        image = UIImage(named: "Friends")
 //        capturedImage.image = UIImage(named: "Friends")
