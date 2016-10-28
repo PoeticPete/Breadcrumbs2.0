@@ -34,6 +34,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setupAlertView()
         setupAnnotationIconImage()
         getMyVotes()
+
         map.showsUserLocation = true
         
         

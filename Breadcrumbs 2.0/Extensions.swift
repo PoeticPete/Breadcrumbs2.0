@@ -29,3 +29,20 @@ extension UIImage {
         return newImage
     }
 }
+
+extension UINavigationController {
+    
+    func hairLine(hide: Bool) {
+        //hides hairline at the bottom of the navigationbar
+        for subview in self.navigationBar.subviews {
+            if subview is UIImageView {
+                for hairline in subview.subviews {
+                    if hairline is UIImageView && hairline.bounds.height <= 1.0 {
+                        hairline.isHidden = hide
+                    }
+                }
+            }
+        }
+        
+    }
+}
