@@ -9,9 +9,9 @@ class UploadViewController: UIViewController,CLUploaderDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        capturedImage.image = image
-        image = UIImage(named: "Friends")
-        capturedImage.image = UIImage(named: "Friends")
+        capturedImage.image = image
+//        image = UIImage(named: "Friends")
+//        capturedImage.image = UIImage(named: "Friends")
         Cloudinary = CLCloudinary(url: "cloudinary://645121525236522:HQ90xZWm0Dt0w2UzIcSLtjhG5CA@dufz2rmju")
 //        Cloudinary.config().setValue("dufz2rmju", forKey: "cloud_name")
 //        Cloudinary.config().setValue("645121525236522", forKey: "api_key")
@@ -32,6 +32,7 @@ class UploadViewController: UIViewController,CLUploaderDelegate
 //        let forUpload = UIImagePNGRepresentation(self.image!)! as Data
         let forUpload = UIImageJPEGRepresentation(self.image!, 0.3)! as Data
         let uploader = CLUploader(Cloudinary, delegate: self)
+        
 //        uploader?.upload(forUpload, options: ["public_id":fileId])
 
         uploader?.upload(forUpload, options: ["public_id":fileId], withCompletion:onCloudinaryCompletion, andProgress:onCloudinaryProgress)

@@ -53,8 +53,8 @@
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timestamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DuR-g4-F0w">
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="13"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -68,12 +68,12 @@
                 <constraint firstItem="Flq-Ss-odX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FYW-2Y-fjX"/>
                 <constraint firstItem="Flq-Ss-odX" firstAttribute="top" secondItem="fRz-24-zo1" secondAttribute="bottom" constant="8" id="OY9-1L-s6B"/>
                 <constraint firstItem="4yT-0B-X5x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ule-ob-iLa"/>
+                <constraint firstItem="DuR-g4-F0w" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="YPa-ox-sWn"/>
                 <constraint firstItem="uc3-BJ-3nC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dYC-tD-vgB"/>
                 <constraint firstItem="4yT-0B-X5x" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.2" id="dyX-uW-VYJ"/>
                 <constraint firstItem="fRz-24-zo1" firstAttribute="centerX" secondItem="Flq-Ss-odX" secondAttribute="centerX" id="mLb-tu-jOj"/>
                 <constraint firstAttribute="bottom" secondItem="4yT-0B-X5x" secondAttribute="bottom" id="mxH-9W-Adu"/>
-                <constraint firstItem="DuR-g4-F0w" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ngl-hT-D5g"/>
-                <constraint firstItem="4yT-0B-X5x" firstAttribute="top" secondItem="DuR-g4-F0w" secondAttribute="bottom" constant="5" id="o28-jE-8eo"/>
+                <constraint firstItem="DuR-g4-F0w" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="xX9-VU-UYV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

@@ -116,6 +116,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
         calloutview.key = annotation.key
         calloutview.annotation = annotation
+        calloutview.timestampLabel.text = timeAgoSinceDate(date: calloutview.annotation.timestamp, numericDates: true)
+        
         if myVotes[calloutview.key] == 1 {
             calloutview.upSelected = true
             calloutview.upOutlet.tintColor = getColor(annotation.upVotes!)
@@ -192,7 +194,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             annotationView?.annotation = annotation
         }
         let thisAnnotation = annotation as! CustomAnnotation
-        print(thisAnnotation.upVotes)
         
         annotationView!.image = flatAnnotationImage.imageWithColor(color1: getColor(thisAnnotation.upVotes))
         return annotationView
@@ -253,13 +254,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let circleQuery = currGeoFire!.query(at: center, withRadius: 100)
         
         circleQuery!.observe(.keyEntered, with: { snapshot in
-            print(snapshot.0!)
             
             allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
-                self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key)
-                
+                if let time = messageSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
+                    let date = NSDate(timeIntervalSince1970: time/1000)
+                    self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date)
+                }
+
             })
-            print(snapshot.1!)
             
         })
         
@@ -279,12 +281,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
     }
     
-    func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String) {
+    func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate) {
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude))
         point.message = message
         point.upVotes = upVotes
         point.key = key
+        point.timestamp = timestamp
+        
         self.map.addAnnotation(point)
+    
+        
     }
     
     @IBAction func refreshTapped(_ sender: AnyObject) {
