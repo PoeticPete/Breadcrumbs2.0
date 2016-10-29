@@ -96,6 +96,24 @@
             </connections>
             <point key="canvasLocation" x="21" y="-232"/>
         </view>
+        <view contentMode="scaleToFill" id="HhS-8o-JUW">
+            <rect key="frame" x="0.0" y="0.0" width="304" height="450"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N8g-qV-0Pa">
+                    <rect key="frame" x="16" y="20" width="272" height="410"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="N8g-qV-0Pa" firstAttribute="top" secondItem="HhS-8o-JUW" secondAttribute="top" constant="20" id="5E6-e0-WUd"/>
+                <constraint firstAttribute="bottom" secondItem="N8g-qV-0Pa" secondAttribute="bottom" constant="20" id="OtE-8F-dhm"/>
+                <constraint firstItem="N8g-qV-0Pa" firstAttribute="leading" secondItem="HhS-8o-JUW" secondAttribute="leading" constant="16" id="n2i-7O-qPY"/>
+                <constraint firstAttribute="trailing" secondItem="N8g-qV-0Pa" secondAttribute="trailing" constant="16" id="vW1-SE-OxR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-39" y="160"/>
+        </view>
     </objects>
     <resources>
         <image name="down" width="44" height="44"/>

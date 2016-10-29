@@ -17,7 +17,7 @@
 		864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361621DB56B8800F3E6C0 /* CalloutView.swift */; };
 		864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361641DB572BD00F3E6C0 /* Extensions.swift */; };
 		864361671DB57C0E00F3E6C0 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361661DB57C0E00F3E6C0 /* Global.swift */; };
-		8643616A1DB5A6DF00F3E6C0 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */; };
+		865FC1D01DC4319500875ECC /* PhotoCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1CF1DC4319500875ECC /* PhotoCalloutView.swift */; };
 		86734D031DB1771900195E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D021DB1771900195E42 /* AppDelegate.swift */; };
 		86734D051DB1771900195E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D041DB1771900195E42 /* ViewController.swift */; };
 		86734D081DB1771900195E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86734D061DB1771900195E42 /* Main.storyboard */; };
@@ -31,8 +31,6 @@
 		86734D6A1DB1B89500195E42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86734D691DB1B89500195E42 /* GoogleService-Info.plist */; };
 		86734D6C1DB1D11500195E42 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86734D6B1DB1D11500195E42 /* MapKit.framework */; };
 		86BD85441DBA857E00A6DF6D /* libCloudinary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BD85431DBA857E00A6DF6D /* libCloudinary.a */; };
-		86BD85711DBA864F00A6DF6D /* TestVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD85701DBA864F00A6DF6D /* TestVCViewController.swift */; };
-		86BD85731DBA86ED00A6DF6D /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD85721DBA86ED00A6DF6D /* UploadViewController.swift */; };
 		F7188C827BAC42986DE1B3D1 /* Pods_Breadcrumbs_2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE22450085868D298AAAE23F /* Pods_Breadcrumbs_2_0.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +49,7 @@
 		864361621DB56B8800F3E6C0 /* CalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
 		864361641DB572BD00F3E6C0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		864361661DB57C0E00F3E6C0 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
-		864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
+		865FC1CF1DC4319500875ECC /* PhotoCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCalloutView.swift; sourceTree = "<group>"; };
 		86734CFF1DB1771900195E42 /* Breadcrumbs 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breadcrumbs 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86734D021DB1771900195E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86734D041DB1771900195E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,8 +81,6 @@
 		86BD85481DBA85A200A6DF6D /* Cloudinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cloudinary.h; sourceTree = "<group>"; };
 		86BD85491DBA85A200A6DF6D /* CLTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTransformation.h; sourceTree = "<group>"; };
 		86BD854A1DBA85A200A6DF6D /* CLUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLUploader.h; sourceTree = "<group>"; };
-		86BD85701DBA864F00A6DF6D /* TestVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVCViewController.swift; sourceTree = "<group>"; };
-		86BD85721DBA86ED00A6DF6D /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		DE22450085868D298AAAE23F /* Pods_Breadcrumbs_2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Breadcrumbs_2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,6 +129,17 @@
 			path = "Breadcrumbs 2.0";
 			sourceTree = "<group>";
 		};
+		865FC1D11DC431B200875ECC /* Map Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */,
+				8643615A1DB544E600F3E6C0 /* AnnotationView.swift */,
+				865FC1CF1DC4319500875ECC /* PhotoCalloutView.swift */,
+				864361621DB56B8800F3E6C0 /* CalloutView.swift */,
+			);
+			name = "Map Stuff";
+			sourceTree = "<group>";
+		};
 		86734CF61DB1771900195E42 = {
 			isa = PBXGroup;
 			children = (
@@ -159,20 +166,15 @@
 			isa = PBXGroup;
 			children = (
 				86734D061DB1771900195E42 /* Main.storyboard */,
-				86BD85721DBA86ED00A6DF6D /* UploadViewController.swift */,
-				86BD85701DBA864F00A6DF6D /* TestVCViewController.swift */,
-				864361691DB5A6DF00F3E6C0 /* DOFavoriteButton.swift */,
-				8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */,
+				865FC1D11DC431B200875ECC /* Map Stuff */,
 				86734D021DB1771900195E42 /* AppDelegate.swift */,
 				86734D041DB1771900195E42 /* ViewController.swift */,
 				864361641DB572BD00F3E6C0 /* Extensions.swift */,
 				864361661DB57C0E00F3E6C0 /* Global.swift */,
-				8643615A1DB544E600F3E6C0 /* AnnotationView.swift */,
 				1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */,
 				1F69D24A1DB7F7B100E54536 /* ProfileTableViewCell.swift */,
 				86734D091DB1771900195E42 /* Assets.xcassets */,
 				864361601DB56B6100F3E6C0 /* Callout.xib */,
-				864361621DB56B8800F3E6C0 /* CalloutView.swift */,
 				86734D0B1DB1771900195E42 /* LaunchScreen.storyboard */,
 				86734D0E1DB1771A00195E42 /* Info.plist */,
 				86734D691DB1B89500195E42 /* GoogleService-Info.plist */,
@@ -342,11 +344,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				86734D641DB1B76000195E42 /* GFBase32Utils.m in Sources */,
-				86BD85731DBA86ED00A6DF6D /* UploadViewController.swift in Sources */,
 				86734D051DB1771900195E42 /* ViewController.swift in Sources */,
 				8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */,
 				1F69D24B1DB7F7B100E54536 /* ProfileTableViewCell.swift in Sources */,
 				864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */,
+				865FC1D01DC4319500875ECC /* PhotoCalloutView.swift in Sources */,
 				1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */,
 				86734D651DB1B76000195E42 /* GFGeoHash.m in Sources */,
 				860E53B21DC39E5A00B07CFB /* NYAlertView.m in Sources */,
@@ -356,8 +358,6 @@
 				864361671DB57C0E00F3E6C0 /* Global.swift in Sources */,
 				86734D661DB1B76000195E42 /* GFGeoHashQuery.m in Sources */,
 				864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */,
-				86BD85711DBA864F00A6DF6D /* TestVCViewController.swift in Sources */,
-				8643616A1DB5A6DF00F3E6C0 /* DOFavoriteButton.swift in Sources */,
 				860E53B31DC39E5A00B07CFB /* NYAlertViewController.m in Sources */,
 				86734D671DB1B76000195E42 /* GFQuery.m in Sources */,
 			);
