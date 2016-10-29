@@ -19,9 +19,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var geoFire:GeoFire!
     var manager:CLLocationManager!
     var currentLocation:CLLocation!
-    let alert = UIAlertController(title: "Drop a crumb", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-    let newAlert = NYAlertViewController()
     var flatAnnotationImage:UIImage!
+    var currentLocationName = ""
+    var imagePicked:UIImage!
+    var Cloudinary:CLCloudinary!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +32,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         geoFire = GeoFire(firebaseRef: geofireRef)
         map.delegate = self
         setupLocationManager()
-        setupAlertView()
         setupAnnotationIconImage()
         getMyVotes()
-
+        Cloudinary = CLCloudinary(url: "cloudinary://645121525236522:HQ90xZWm0Dt0w2UzIcSLtjhG5CA@dufz2rmju") // get this value from server later
         map.showsUserLocation = true
         
         
@@ -47,51 +47,89 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     @IBAction func composeTapped(_ sender: AnyObject) {
         manager.requestLocation()
-        
-        
-        
+        presentAlert(image: nil)
+
+    }
+
+    func presentAlert(image:UIImage?) {
         let alertViewController = NYAlertViewController()
         
         // Set a title and message
-        alertViewController.title = "Custom UI"
-        alertViewController.message = "Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec id elit non mi porta gravida at eget metus."
+        alertViewController.title = currentLocationName
+        alertViewController.message = ""
         
         // Customize appearance as desired
         alertViewController.buttonCornerRadius = 20.0
         alertViewController.view.tintColor = self.view.tintColor
-        
         alertViewController.titleFont = UIFont(name: "AvenirNext-Bold", size: 19.0)
         alertViewController.messageFont = UIFont(name: "AvenirNext-Medium", size: 16.0)
         alertViewController.cancelButtonTitleFont = UIFont(name: "AvenirNext-Medium", size: 16.0)
         alertViewController.cancelButtonTitleFont = UIFont(name: "AvenirNext-Medium", size: 16.0)
-        
         alertViewController.swipeDismissalGestureEnabled = true
         alertViewController.backgroundTapDismissalGestureEnabled = true
-        
         // Add alert actions
         
-        let cancelAction = NYAlertAction(
-            title: "Done",
-            style: .cancel,
-            handler: { (action: NYAlertAction?) -> Void in
-                self.dismiss(animated: true, completion: nil)
-        }
-        )
-        alertViewController.addAction(cancelAction)
-        
-        let ok = NYAlertAction(
-            title: "OK",
+        let photoAction = NYAlertAction(
+            title: "Photo",
             style: .default,
             handler: { (action: NYAlertAction?) -> Void in
+                self.dismiss(animated: false, completion: nil)
+                self.presentCamera()
+                
+        })
+        alertViewController.addAction(photoAction)
+        
+        let postAction = NYAlertAction(
+            title: "Post",
+            style: .default,
+            handler: { (action: NYAlertAction?) -> Void in
+                print("OK PRESSED")
+                
+                let textString = (alertViewController.textFields![0] as AnyObject).text!
+                let trimmedString = textString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+                print(trimmedString)
+                if image != nil {
+                    let randomRef = FIRDatabase.database().reference().childByAutoId()
+                    self.uploadToCloudinary(fileId: "\(randomRef.key)")
+                } else if trimmedString == "" {
+                    print("EMPTY")
+                } else {
+//                    let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
+//                    dropPin.message = trimmedString
+//                    print(self.currentLocation.coordinate)
+                    self.setMessage(loc: self.currentLocation, message: trimmedString)
+                    self.getLocalMessages()
+                }
                 self.dismiss(animated: true, completion: nil)
+        })
+        alertViewController.addAction(postAction)
+        
+        if image != nil {
+            let imageView = UIImageView(image: image)
+            imageView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width * 4/5, height: self.view.frame.height * 4/5)
+            imageView.contentMode = .scaleAspectFit
+            alertViewController.alertViewContentView = imageView
         }
-        )
-        alertViewController.addAction(ok)
+        alertViewController.addTextField { (textfield) in
+            textfield?.textColor = UIColor.darkText
+        }
         
         self.present(alertViewController, animated: true, completion: nil)
-//        self.present(alert, animated: true, completion: nil)
     }
-
+    
+    func presentCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            var imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+            imagePicker.allowsEditing = false
+            print("presenting imagePicker")
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            print("not available")
+        }
+        
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -133,7 +171,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Location name
             if let locationName = placeMark.addressDictionary?["Name"] as? String
             {
-                self.alert.title = locationName
+                self.currentLocationName = locationName
+//                self.alert.title = locationName
                 
             }
         }
@@ -254,41 +293,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     
     // --------------------------SETUP FUNCTIONS (CALLED IN VIEW DID LOAD)--------------------------
-    func setupAlertView() {
-        
-        newAlert.addTextField { (textfield) in
-            textfield?.textColor = UIColor.darkText
-        }
-        
-        
-//        alert.addTextField { (textfield) in
-//            textfield.textColor = UIColor.darkText
-//        }
-//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-//            print("OK PRESSED")
-//            let textString = self.alert.textFields![0].text!
-//            let trimmedString = textString.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-//            
-//            if trimmedString == "" {
-//                print("EMPTY")
-//            } else {
-//                let dropPin = CustomAnnotation(coordinate: self.currentLocation.coordinate)
-//                dropPin.message = trimmedString
-//                print(self.currentLocation.coordinate)
-//                self.setMessage(loc: self.currentLocation, message: trimmedString)
-//                self.getLocalMessages()
-////                self.map.addAnnotation(dropPin)
-//            }
-//            self.alert.textFields![0].text = ""
-//            
-//        }))
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-//            print("CANCEL PRESSED")
-//            self.alert.textFields![0].text = ""
-//        }))
-    }
-    
-    
+
     func setupAnnotationIconImage() {
         flatAnnotationImage = UIImage(named: "map-marker")!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
     }
@@ -304,7 +309,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     
-    // ----------------------Retrieve from Database------------------------
+    // ----------------------Retrieve from Database-------------------------------------------
     func getLocalMessages() {
         print("getting local messages")
         let currGeoFire = GeoFire(firebaseRef: currPostsRef)
@@ -318,25 +323,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     let date = NSDate(timeIntervalSince1970: time/1000)
                     self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date)
                 }
-
             })
-            
         })
-        
-        
     }
     
     func setMessage(loc:CLLocation, message:String) {
         let randomKey = FIRDatabase.database().reference().childByAutoId()
-//        let allPosts = FIRDatabase.database().reference().child("allPosts")
-//        let myPosts = FIRDatabase.database().reference().child("myPosts")
+        //        let allPosts = FIRDatabase.database().reference().child("allPosts")
+        //        let myPosts = FIRDatabase.database().reference().child("myPosts")
         
         let firebaseTimeStamp = [".sv":"timestamp"]
         setNewLocation(loc: loc, baseRef: currPostsRef, key: randomKey.key)
         allPostsRef.child(randomKey.key).child("message").setValue(message)
         allPostsRef.child(randomKey.key).child("upVotes").setValue(0)
         allPostsRef.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
-        
     }
     
     func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate) {
@@ -359,16 +359,70 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
 }
 
+extension ViewController: UIImagePickerControllerDelegate,
+UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let photo = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            imagePicked = photo
+            print("picked \(photo)")
+        }
+        self.dismiss(animated: true, completion: nil)
+        
+        presentAlert(image: imagePicked)
+    }
+    
+}
+extension ViewController: CLUploaderDelegate {
+    
+    func uploadToCloudinary(fileId:String){
+        //        let forUpload = UIImagePNGRepresentation(self.image!)! as Data
+        let forUpload = UIImageJPEGRepresentation(self.imagePicked!, 0.3)! as Data
+        let uploader = CLUploader(Cloudinary, delegate: self)
+        
+        //        uploader?.upload(forUpload, options: ["public_id":fileId])
+        
+        uploader?.upload(forUpload, options: ["public_id":fileId], withCompletion:onCloudinaryCompletion, andProgress:onCloudinaryProgress)
+        
+    }
+    
+    func onCloudinaryCompletion(successResult:[AnyHashable : Any]?, errorResult:String?, code:Int, idContext:Any?) {
+        print(successResult?.values)
+        print(code)
+        print(errorResult)
+        let fileId = successResult?["public_id"] as! String
+        
+        uploadDetailsToServer(fileId: fileId, loc: self.currentLocation)
+    }
+    
+    func uploadDetailsToServer(fileId:String, loc:CLLocation){
+        
+        //        let allPosts = FIRDatabase.database().reference().child("allPosts")
+        //        let myPosts = FIRDatabase.database().reference().child("myPosts")
+        print(fileId)
+        let firebaseTimeStamp = [".sv":"timestamp"]
+        print("a")
+        setNewLocation(loc: loc, baseRef: currPostsRef, key: fileId)
+        print("b")
+        allPostsRef.child(fileId).child("upVotes").setValue(0)
+        print("c")
+        allPostsRef.child(fileId).child("timestamp").setValue(firebaseTimeStamp)
+        print("d")
+        allPostsRef.child(fileId).child("hasPicture").setValue(true)
+        print("e")
+        allPostsRef.child(fileId).child("message").setValue("picture with ID \(fileId)")
+        print("f")
+        
+        
+        
+    }
+    
+    func onCloudinaryProgress(bytesWritten:Int, totalBytesWritten:Int, totalBytesExpectedToWrite:Int, idContext:Any?) {
+        //do any progress update you may need
+        print("bytes written: \(bytesWritten)")
+        print("total bytes written \(totalBytesWritten)")
+        print("total bytes expected to write \(totalBytesExpectedToWrite)")
+    }
+    
+}
 
-
-// OLD LOCATION CODE
-//        let userLocation:CLLocation = locations[0]
-//        let latitude:CLLocationDegrees = userLocation.coordinate.latitude
-//        let longitude:CLLocationDegrees = userLocation.coordinate.longitude
-//        let latDelta:CLLocationDegrees = 0.01
-//        let lonDelta:CLLocationDegrees = 0.01
-//        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-//        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-//        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-//        map.setRegion(region, animated: false)
 
