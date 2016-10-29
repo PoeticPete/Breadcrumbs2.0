@@ -152,6 +152,26 @@
 			name = "Map Stuff";
 			sourceTree = "<group>";
 		};
+		865FC1DD1DC45F2100875ECC /* CrumbTableView */ = {
+			isa = PBXGroup;
+			children = (
+				865FC1DB1DC45A1E00875ECC /* CommentTableViewCell.swift */,
+				865FC1D91DC455AD00875ECC /* PhotoCrumbTableViewCell.swift */,
+				865FC1D71DC4514A00875ECC /* CrumbTableViewCell.swift */,
+				865FC1D51DC44EF100875ECC /* CrumbTableViewController.swift */,
+			);
+			name = CrumbTableView;
+			sourceTree = "<group>";
+		};
+		865FC1DE1DC45F3400875ECC /* Profile table view */ = {
+			isa = PBXGroup;
+			children = (
+				1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */,
+				1F69D24A1DB7F7B100E54536 /* ProfileTableViewCell.swift */,
+			);
+			name = "Profile table view";
+			sourceTree = "<group>";
+		};
 		86734CF61DB1771900195E42 = {
 			isa = PBXGroup;
 			children = (
@@ -178,17 +198,13 @@
 			isa = PBXGroup;
 			children = (
 				86734D061DB1771900195E42 /* Main.storyboard */,
-				865FC1DB1DC45A1E00875ECC /* CommentTableViewCell.swift */,
-				865FC1D91DC455AD00875ECC /* PhotoCrumbTableViewCell.swift */,
-				865FC1D71DC4514A00875ECC /* CrumbTableViewCell.swift */,
 				86734D0B1DB1771900195E42 /* LaunchScreen.storyboard */,
 				86734D091DB1771900195E42 /* Assets.xcassets */,
 				86734D021DB1771900195E42 /* AppDelegate.swift */,
 				865FC1D11DC431B200875ECC /* Map Stuff */,
+				865FC1DD1DC45F2100875ECC /* CrumbTableView */,
 				86734D041DB1771900195E42 /* ViewController.swift */,
-				1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */,
-				865FC1D51DC44EF100875ECC /* CrumbTableViewController.swift */,
-				1F69D24A1DB7F7B100E54536 /* ProfileTableViewCell.swift */,
+				865FC1DE1DC45F3400875ECC /* Profile table view */,
 				864361641DB572BD00F3E6C0 /* Extensions.swift */,
 				864361661DB57C0E00F3E6C0 /* Global.swift */,
 				86734D0E1DB1771A00195E42 /* Info.plist */,
