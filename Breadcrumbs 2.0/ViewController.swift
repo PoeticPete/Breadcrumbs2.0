@@ -23,6 +23,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var currentLocationName = ""
     var imagePicked:UIImage!
     var Cloudinary:CLCloudinary!
+    var annotation:CustomAnnotation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +37,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         getMyVotes()
         Cloudinary = CLCloudinary(url: "cloudinary://645121525236522:HQ90xZWm0Dt0w2UzIcSLtjhG5CA@dufz2rmju") // get this value from server later
         map.showsUserLocation = true
-        
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         if UserDefaults.standard.object(forKey: "lastLongitude") != nil && UserDefaults.standard.object(forKey: "lastLatitude") != nil && UserDefaults.standard.object(forKey: "lastLocationName") != nil {
             print("successfully retrieved all user defaults")
             currentLocation = CLLocation(latitude: UserDefaults.standard.object(forKey: "lastLatitude") as! CLLocationDegrees, longitude: UserDefaults.standard.object(forKey: "lastLongitude") as! CLLocationDegrees)
@@ -49,6 +45,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.10, longitudeDelta: 0.10))
             self.map.setRegion(region, animated: true)
         }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getLocalMessages()
     }
     
@@ -195,7 +195,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapView.setCenter((view.annotation?.coordinate)!, animated: false)
         
         
-        var annotation = view.annotation as! CustomAnnotation
+        annotation = view.annotation as! CustomAnnotation
         
         if annotation.hasPicture == true {
             print("THIS VIEW HAS A PICTURE")
@@ -207,16 +207,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
             calloutview.layer.masksToBounds = true
             let url = URL(string: "https://res.cloudinary.com/dufz2rmju/\(annotation.key!)")
-
+            calloutview.annotation = annotation
             
             calloutview.photoView.contentMode = .scaleAspectFill
             if let data = try? Data(contentsOf: url!) {
                 calloutview.photoView.image = UIImage(data: data)
+                annotation.picture = UIImage(data: data)
             } else {
                 print("no image")
                  calloutview.photoView.image = UIImage()
             }
-            calloutview.commentsButton.addTarget(self, action: #selector(ViewController.action), for: UIControlEvents.touchUpInside)
+            calloutview.commentsButton.addTarget(self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
             calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
             
             calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
@@ -252,7 +253,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             
             //then make a action method :
             
-            calloutview.commentsButton.addTarget(self, action: #selector(ViewController.action), for: UIControlEvents.touchUpInside)
+            calloutview.commentsButton.addTarget(self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
             calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
             
             //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
@@ -270,8 +271,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
     }
     
-    func action() {
+    func toCrumbTableView() {
         self.performSegue(withIdentifier: "ShowPostSegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowPostSegue" {
+            var nextVC = segue.destination as! CrumbTableViewController
+            nextVC.annotation = annotation
+        }
     }
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
