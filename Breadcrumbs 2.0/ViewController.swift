@@ -40,7 +40,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        if UserDefaults.standard.object(forKey: "lastLongitude") != nil && UserDefaults.standard.object(forKey: "lastLatitude") != nil && UserDefaults.standard.object(forKey: "lastLocationName") != nil {
+            print("successfully retrieved all user defaults")
+            currentLocation = CLLocation(latitude: UserDefaults.standard.object(forKey: "lastLatitude") as! CLLocationDegrees, longitude: UserDefaults.standard.object(forKey: "lastLongitude") as! CLLocationDegrees)
+            currentLocationName = UserDefaults.standard.object(forKey: "lastLocationName") as! String
+            let center = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.10, longitudeDelta: 0.10))
+            self.map.setRegion(region, animated: true)
+        }
         getLocalMessages()
     }
     
@@ -137,14 +145,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let location = locations.last! as CLLocation
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.10, longitudeDelta: 0.10))
-        self.map.setRegion(region, animated: false)
+        UserDefaults.standard.set(location.coordinate.latitude as NSNumber, forKey: "lastLatitude")
+        UserDefaults.standard.set(location.coordinate.longitude as NSNumber, forKey: "lastLongitude")
         
-        // set to Firebase
-        let randomKey = FIRDatabase.database().reference().childByAutoId()
-//        geoFire.setLocation(location, forKey: randomKey.key)
-    
         currentLocation = location
-
         setCurrentLocationName()
         print("UPDATED \(location)")
     }
@@ -172,6 +176,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             if let locationName = placeMark.addressDictionary?["Name"] as? String
             {
                 self.currentLocationName = locationName
+                UserDefaults.standard.set(locationName, forKey: "lastLocationName")
 //                self.alert.title = locationName
                 
             }
@@ -189,45 +194,80 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
         mapView.setCenter((view.annotation?.coordinate)!, animated: false)
         
+        
         var annotation = view.annotation as! CustomAnnotation
-        let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
-        let calloutview = views![0] as! CalloutView
-        calloutview.layer.cornerRadius = 20
-        calloutview.layer.borderWidth = 5.0
-        calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
-        calloutview.layer.masksToBounds = true
-        calloutview.messageLabel.text = annotation.message
-        calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
-        calloutview.annotation = annotation
-        calloutview.timestampLabel.text = timeAgoSinceDate(date: calloutview.annotation.timestamp, numericDates: true)
         
-        if myVotes[annotation.key] == 1 {
-            calloutview.upSelected = true
-            calloutview.upOutlet.tintColor = getColor(annotation.upVotes!)
-        } else if myVotes[annotation.key] == -1 {
-            calloutview.downSelected = true
-            calloutview.downOutlet.tintColor = getColor(annotation.upVotes!)
-        }
-//        button.addTarget(self, action: "action:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        //then make a action method :
+        if annotation.hasPicture == true {
+            print("THIS VIEW HAS A PICTURE")
+            let views = Bundle.main.loadNibNamed("PhotoCallout", owner: self, options: nil)
+            print(views!)
+            let calloutview = views![0] as! PhotoCalloutView
+            calloutview.layer.cornerRadius = 20
+            calloutview.layer.borderWidth = 5.0
+            calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
+            calloutview.layer.masksToBounds = true
+            let url = URL(string: "https://res.cloudinary.com/dufz2rmju/\(annotation.key!)")
 
-        calloutview.commentsButton.addTarget(self, action: #selector(ViewController.action), for: UIControlEvents.touchUpInside)
-        calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
-        
-//        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
-        calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
-        calloutview.alpha = 0.0
-        calloutview.backgroundColor = UIColor.white
-        calloutview.isUserInteractionEnabled = true
-        
-        
-        self.view.addSubview(calloutview)
-        UIView.animate(withDuration: 0.4, animations: {
-            calloutview.alpha = 1.0
-        })
-        
-        
+            
+            calloutview.photoView.contentMode = .scaleAspectFill
+            if let data = try? Data(contentsOf: url!) {
+                calloutview.photoView.image = UIImage(data: data)
+            } else {
+                print("no image")
+                 calloutview.photoView.image = UIImage()
+            }
+            calloutview.commentsButton.addTarget(self, action: #selector(ViewController.action), for: UIControlEvents.touchUpInside)
+            calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
+            
+            calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
+            calloutview.alpha = 0.0
+            calloutview.backgroundColor = UIColor.white
+            calloutview.isUserInteractionEnabled = true
+            self.view.addSubview(calloutview)
+            UIView.animate(withDuration: 0.4, animations: {
+                calloutview.alpha = 1.0
+            })
+            
+            
+        } else {
+            let views = Bundle.main.loadNibNamed("Callout", owner: self, options: nil)
+            let calloutview = views![0] as! CalloutView
+            calloutview.layer.cornerRadius = 20
+            calloutview.layer.borderWidth = 5.0
+            calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
+            calloutview.layer.masksToBounds = true
+            calloutview.messageLabel.text = annotation.message
+            calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
+            calloutview.annotation = annotation
+            calloutview.timestampLabel.text = timeAgoSinceDate(date: calloutview.annotation.timestamp, numericDates: true)
+            
+            if myVotes[annotation.key] == 1 {
+                calloutview.upSelected = true
+                calloutview.upOutlet.tintColor = getColor(annotation.upVotes!)
+            } else if myVotes[annotation.key] == -1 {
+                calloutview.downSelected = true
+                calloutview.downOutlet.tintColor = getColor(annotation.upVotes!)
+            }
+            //        button.addTarget(self, action: "action:", forControlEvents: UIControlEvents.TouchUpInside)
+            
+            //then make a action method :
+            
+            calloutview.commentsButton.addTarget(self, action: #selector(ViewController.action), for: UIControlEvents.touchUpInside)
+            calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
+            
+            //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
+            calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
+            calloutview.alpha = 0.0
+            calloutview.backgroundColor = UIColor.white
+            calloutview.isUserInteractionEnabled = true
+            
+            
+            self.view.addSubview(calloutview)
+            UIView.animate(withDuration: 0.4, animations: {
+                calloutview.alpha = 1.0
+            })
+        }
+
     }
     
     func action() {
@@ -253,7 +293,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     func clearCallouts() {
         for subview in self.view.subviews
         {
-            if subview.isKind(of: CalloutView.self) {
+            if subview.isKind(of: CalloutView.self) || subview.isKind(of: PhotoCalloutView.self){
                 UIView.animate(withDuration: 0.4, animations: {
                     subview.alpha = 0.0
                     }, completion: { void in
@@ -321,7 +361,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
                 if let time = messageSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
                     let date = NSDate(timeIntervalSince1970: time/1000)
-                    self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date)
+                    var hasPicture = false
+                    if messageSnap.childSnapshot(forPath: "hasPicture").exists() {
+                        hasPicture = messageSnap.childSnapshot(forPath: "hasPicture").value as! Bool
+                    }
+                    self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date, hasPicture: hasPicture)
                 }
             })
         })
@@ -339,13 +383,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         allPostsRef.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
     }
     
-    func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate) {
+    func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate, hasPicture:Bool) {
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude))
         point.message = message
         point.upVotes = upVotes
         point.key = key
         point.timestamp = timestamp
-        
+        point.hasPicture = hasPicture
         self.map.addAnnotation(point)
     }
     
@@ -376,7 +420,7 @@ extension ViewController: CLUploaderDelegate {
     
     func uploadToCloudinary(fileId:String){
         //        let forUpload = UIImagePNGRepresentation(self.image!)! as Data
-        let forUpload = UIImageJPEGRepresentation(self.imagePicked!, 0.3)! as Data
+        let forUpload = UIImageJPEGRepresentation(self.imagePicked!, 0.2)! as Data
         let uploader = CLUploader(Cloudinary, delegate: self)
         
         //        uploader?.upload(forUpload, options: ["public_id":fileId])
@@ -400,20 +444,12 @@ extension ViewController: CLUploaderDelegate {
         //        let myPosts = FIRDatabase.database().reference().child("myPosts")
         print(fileId)
         let firebaseTimeStamp = [".sv":"timestamp"]
-        print("a")
         setNewLocation(loc: loc, baseRef: currPostsRef, key: fileId)
-        print("b")
         allPostsRef.child(fileId).child("upVotes").setValue(0)
-        print("c")
         allPostsRef.child(fileId).child("timestamp").setValue(firebaseTimeStamp)
-        print("d")
         allPostsRef.child(fileId).child("hasPicture").setValue(true)
-        print("e")
         allPostsRef.child(fileId).child("message").setValue("picture with ID \(fileId)")
-        print("f")
-        
-        
-        
+
     }
     
     func onCloudinaryProgress(bytesWritten:Int, totalBytesWritten:Int, totalBytesExpectedToWrite:Int, idContext:Any?) {

@@ -18,6 +18,7 @@
 		864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361641DB572BD00F3E6C0 /* Extensions.swift */; };
 		864361671DB57C0E00F3E6C0 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864361661DB57C0E00F3E6C0 /* Global.swift */; };
 		865FC1D01DC4319500875ECC /* PhotoCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1CF1DC4319500875ECC /* PhotoCalloutView.swift */; };
+		865FC1D31DC43ACF00875ECC /* PhotoCallout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 865FC1D21DC43ACF00875ECC /* PhotoCallout.xib */; };
 		86734D031DB1771900195E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D021DB1771900195E42 /* AppDelegate.swift */; };
 		86734D051DB1771900195E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D041DB1771900195E42 /* ViewController.swift */; };
 		86734D081DB1771900195E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86734D061DB1771900195E42 /* Main.storyboard */; };
@@ -50,6 +51,7 @@
 		864361641DB572BD00F3E6C0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		864361661DB57C0E00F3E6C0 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		865FC1CF1DC4319500875ECC /* PhotoCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCalloutView.swift; sourceTree = "<group>"; };
+		865FC1D21DC43ACF00875ECC /* PhotoCallout.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCallout.xib; sourceTree = "<group>"; };
 		86734CFF1DB1771900195E42 /* Breadcrumbs 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breadcrumbs 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86734D021DB1771900195E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86734D041DB1771900195E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +134,8 @@
 		865FC1D11DC431B200875ECC /* Map Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				865FC1D21DC43ACF00875ECC /* PhotoCallout.xib */,
+				864361601DB56B6100F3E6C0 /* Callout.xib */,
 				8643615E1DB5679600F3E6C0 /* CustomAnnotation.swift */,
 				8643615A1DB544E600F3E6C0 /* AnnotationView.swift */,
 				865FC1CF1DC4319500875ECC /* PhotoCalloutView.swift */,
@@ -174,7 +178,6 @@
 				1F8257B41DB6B00100CA8E51 /* ProfileViewController.swift */,
 				1F69D24A1DB7F7B100E54536 /* ProfileTableViewCell.swift */,
 				86734D091DB1771900195E42 /* Assets.xcassets */,
-				864361601DB56B6100F3E6C0 /* Callout.xib */,
 				86734D0B1DB1771900195E42 /* LaunchScreen.storyboard */,
 				86734D0E1DB1771A00195E42 /* Info.plist */,
 				86734D691DB1B89500195E42 /* GoogleService-Info.plist */,
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86734D0D1DB1771900195E42 /* LaunchScreen.storyboard in Resources */,
+				865FC1D31DC43ACF00875ECC /* PhotoCallout.xib in Resources */,
 				86734D6A1DB1B89500195E42 /* GoogleService-Info.plist in Resources */,
 				86734D0A1DB1771900195E42 /* Assets.xcassets in Resources */,
 				86734D081DB1771900195E42 /* Main.storyboard in Resources */,

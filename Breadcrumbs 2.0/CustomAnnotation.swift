@@ -17,6 +17,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
     var message: String!
     var upVotes: Int!
     var timestamp: NSDate!
+    var hasPicture: Bool!
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
