@@ -13,12 +13,14 @@ class CustomAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
 
-    var key:String!
-    var message: String!
-    var upVotes: Int!
-    var timestamp: NSDate!
-    var hasPicture: Bool!
-    var picture: UIImage?
+    var post:Post!
+    
+//    var key:String!
+//    var message: String!
+//    var upVotes: Int!
+//    var timestamp: NSDate!
+//    var hasPicture: Bool!
+//    var picture: UIImage?
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate

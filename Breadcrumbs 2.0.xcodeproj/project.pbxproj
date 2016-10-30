@@ -26,6 +26,7 @@
 		865FC1E31DC65F0100875ECC /* MyPostsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E21DC65F0100875ECC /* MyPostsTableViewController.swift */; };
 		865FC1E51DC65F7500875ECC /* MyTextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E41DC65F7500875ECC /* MyTextPostTableViewCell.swift */; };
 		865FC1E71DC65F8700875ECC /* MyPhotoPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E61DC65F8700875ECC /* MyPhotoPostTableViewCell.swift */; };
+		865FC1EA1DC662F100875ECC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E91DC662F100875ECC /* Post.swift */; };
 		86734D031DB1771900195E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D021DB1771900195E42 /* AppDelegate.swift */; };
 		86734D051DB1771900195E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D041DB1771900195E42 /* ViewController.swift */; };
 		86734D081DB1771900195E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86734D061DB1771900195E42 /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 		865FC1E21DC65F0100875ECC /* MyPostsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostsTableViewController.swift; sourceTree = "<group>"; };
 		865FC1E41DC65F7500875ECC /* MyTextPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextPostTableViewCell.swift; sourceTree = "<group>"; };
 		865FC1E61DC65F8700875ECC /* MyPhotoPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPhotoPostTableViewCell.swift; sourceTree = "<group>"; };
+		865FC1E91DC662F100875ECC /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		86734CFF1DB1771900195E42 /* Breadcrumbs 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breadcrumbs 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86734D021DB1771900195E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86734D041DB1771900195E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				865FC1D11DC431B200875ECC /* Map Stuff */,
 				865FC1DD1DC45F2100875ECC /* CrumbTableView */,
 				865FC1DE1DC45F3400875ECC /* Profile table view */,
+				865FC1E91DC662F100875ECC /* Post.swift */,
 				86734D041DB1771900195E42 /* ViewController.swift */,
 				864361641DB572BD00F3E6C0 /* Extensions.swift */,
 				864361661DB57C0E00F3E6C0 /* Global.swift */,
@@ -401,6 +404,7 @@
 				865FC1E51DC65F7500875ECC /* MyTextPostTableViewCell.swift in Sources */,
 				864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */,
 				865FC1D01DC4319500875ECC /* PhotoCalloutView.swift in Sources */,
+				865FC1EA1DC662F100875ECC /* Post.swift in Sources */,
 				1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */,
 				865FC1E71DC65F8700875ECC /* MyPhotoPostTableViewCell.swift in Sources */,
 				86734D651DB1B76000195E42 /* GFGeoHash.m in Sources */,

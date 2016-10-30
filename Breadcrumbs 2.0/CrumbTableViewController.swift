@@ -30,9 +30,9 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if annotation.hasPicture == true {
-            let w = Double(annotation.picture!.size.width)
-            let h = Double(annotation.picture!.size.height)
+        if annotation.post.hasPicture == true {
+            let w = Double(annotation.post.picture!.size.width)
+            let h = Double(annotation.post.picture!.size.height)
             if indexPath.row == 0 && w < h {
                 return 400.0
             } else {
@@ -49,13 +49,13 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if annotation.hasPicture == true && indexPath.row == 0 {
+        if annotation.post.hasPicture == true && indexPath.row == 0 {
             let cell = table.dequeueReusableCell(withIdentifier: "PhotoCrumbCell") as! PhotoCrumbTableViewCell
-            cell.photo.image = annotation.picture
+            cell.photo.image = annotation.post.picture
             return cell
-        } else if annotation.hasPicture == false && indexPath.row == 0{
+        } else if annotation.post.hasPicture == false && indexPath.row == 0{
             let cell = table.dequeueReusableCell(withIdentifier: "CrumbCell") as! CrumbTableViewCell
-            cell.postLabel.text = annotation.message
+            cell.postLabel.text = annotation.post.message
             return cell
         } else {
             // comments

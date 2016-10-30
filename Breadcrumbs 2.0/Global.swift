@@ -13,6 +13,7 @@ let allPostsRef = FIRDatabase.database().reference().child("allPosts")
 let currPostsRef = FIRDatabase.database().reference().child("currentPostLocations")
 let myVotesRef = FIRDatabase.database().reference().child("myVotes")
 let myPostsRef = FIRDatabase.database().reference().child("myPosts").child(deviceID)
+let cloudinaryBaseURL = "https://res.cloudinary.com/dufz2rmju/"
 var myVotes = [String: Int]()
 
 

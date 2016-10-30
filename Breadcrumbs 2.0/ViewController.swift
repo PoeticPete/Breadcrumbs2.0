@@ -197,29 +197,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
         annotation = view.annotation as! CustomAnnotation
         
-        if annotation.hasPicture == true {
+        if annotation.post.hasPicture == true {
             print("THIS VIEW HAS A PICTURE")
             let views = Bundle.main.loadNibNamed("PhotoCallout", owner: self, options: nil)
             let calloutview = views![0] as! PhotoCalloutView
             calloutview.layer.cornerRadius = 20
             calloutview.layer.borderWidth = 5.0
-            calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
+            calloutview.layer.borderColor = getColor(annotation.post.upVotes!).cgColor
             calloutview.layer.masksToBounds = true
             calloutview.annotation = annotation
             calloutview.photoView.contentMode = .scaleAspectFill
             
             
-            let url = "https://res.cloudinary.com/dufz2rmju/\(annotation.key!)"
+            let url = "https://res.cloudinary.com/dufz2rmju/\(annotation.post.key!)"
             if let img = getImageFromURL(url) {
                 calloutview.photoView.image = img
-                annotation.picture = img
+                annotation.post.picture = img
             } else {
                 calloutview.photoView.image = UIImage()
-                annotation.picture = UIImage()
+                annotation.post.picture = UIImage()
             }
 
             calloutview.commentsButton.addTarget(self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
-            calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
+            calloutview.commentsButton.backgroundColor = getColor(annotation.post.upVotes!)
             
             calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
             calloutview.alpha = 0.0
@@ -236,26 +236,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             let calloutview = views![0] as! CalloutView
             calloutview.layer.cornerRadius = 20
             calloutview.layer.borderWidth = 5.0
-            calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
+            calloutview.layer.borderColor = getColor(annotation.post.upVotes!).cgColor
             calloutview.layer.masksToBounds = true
-            calloutview.messageLabel.text = annotation.message
-            calloutview.upvotesLabel.text = "\(annotation.upVotes!)"
+            calloutview.messageLabel.text = annotation.post.message
+            calloutview.upvotesLabel.text = "\(annotation.post.upVotes!)"
             calloutview.annotation = annotation
-            calloutview.timestampLabel.text = timeAgoSinceDate(date: calloutview.annotation.timestamp, numericDates: true)
+            calloutview.timestampLabel.text = timeAgoSinceDate(date: calloutview.annotation.post.timestamp, numericDates: true)
             
-            if myVotes[annotation.key] == 1 {
+            if myVotes[annotation.post.key] == 1 {
                 calloutview.upSelected = true
-                calloutview.upOutlet.tintColor = getColor(annotation.upVotes!)
-            } else if myVotes[annotation.key] == -1 {
+                calloutview.upOutlet.tintColor = getColor(annotation.post.upVotes!)
+            } else if myVotes[annotation.post.key] == -1 {
                 calloutview.downSelected = true
-                calloutview.downOutlet.tintColor = getColor(annotation.upVotes!)
+                calloutview.downOutlet.tintColor = getColor(annotation.post.upVotes!)
             }
             //        button.addTarget(self, action: "action:", forControlEvents: UIControlEvents.TouchUpInside)
             
             //then make a action method :
             
             calloutview.commentsButton.addTarget(self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
-            calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
+            calloutview.commentsButton.backgroundColor = getColor(annotation.post.upVotes!)
             
             //        calloutview.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutview.bounds.size.height*0.52)
             calloutview.center = CGPoint(x: self.view.center.x, y: self.view.center.y*0.67)
@@ -334,8 +334,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             annotationView?.annotation = annotation
         }
         let thisAnnotation = annotation as! CustomAnnotation
+        annotationView!.image = flatAnnotationImage.imageWithColor(color1: getColor(thisAnnotation.post.upVotes))
         
-        annotationView!.image = flatAnnotationImage.imageWithColor(color1: getColor(thisAnnotation.upVotes))
         return annotationView
     }
     
@@ -374,6 +374,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     if messageSnap.childSnapshot(forPath: "hasPicture").exists() {
                         hasPicture = messageSnap.childSnapshot(forPath: "hasPicture").value as! Bool
                     }
+                    
+                    
                     self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date, hasPicture: hasPicture)
                 }
             })
@@ -395,11 +397,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate, hasPicture:Bool) {
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude))
-        point.message = message
-        point.upVotes = upVotes
-        point.key = key
-        point.timestamp = timestamp
-        point.hasPicture = hasPicture
+        let newPost = Post(key: key, message: message, upVotes: upVotes, timestamp: timestamp, hasPicture: hasPicture)
+        point.post = newPost
         self.map.addAnnotation(point)
     }
     
