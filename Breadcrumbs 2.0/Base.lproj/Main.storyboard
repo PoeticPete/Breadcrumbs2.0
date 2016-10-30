@@ -162,11 +162,92 @@
             </objects>
             <point key="canvasLocation" x="1008.8" y="411.544227886057"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--My posts-->
+        <scene sceneID="aFZ-c1-UqN">
+            <objects>
+                <navigationController id="38z-KX-oTl" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My posts" image="pin-post" selectedImage="pin-post" id="Vcx-iG-w6N"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AlB-mp-bkA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="oTC-YI-Z8e" kind="relationship" relationship="rootViewController" id="ziD-Ua-LmI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wh5-o0-cIH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1476" y="1012"/>
+        </scene>
+        <!--My posts-->
+        <scene sceneID="5B8-47-kNY">
+            <objects>
+                <viewController id="oTC-YI-Z8e" customClass="MyPostsTableViewController" customModule="Breadcrumbs_2_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xv5-yL-NU5"/>
+                        <viewControllerLayoutGuide type="bottom" id="d1Y-du-px2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rZl-S4-02F">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iOS-7u-5QN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyTextPostCell" rowHeight="100" id="s0Q-De-olo" customClass="MyTextPostTableViewCell" customModule="Breadcrumbs_2_0" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s0Q-De-olo" id="njg-oz-GrN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91w-Ql-SNm">
+                                                    <rect key="frame" x="165.5" y="38" width="43" height="23.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="91w-Ql-SNm" firstAttribute="centerX" secondItem="njg-oz-GrN" secondAttribute="centerX" id="XZg-8o-UMI"/>
+                                                <constraint firstItem="91w-Ql-SNm" firstAttribute="centerY" secondItem="njg-oz-GrN" secondAttribute="centerY" id="o55-PL-1tS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="textPostLabel" destination="91w-Ql-SNm" id="MP3-aB-Vlr"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="oTC-YI-Z8e" id="ylp-Lu-peJ"/>
+                                    <outlet property="delegate" destination="oTC-YI-Z8e" id="doc-bJ-90o"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="iOS-7u-5QN" secondAttribute="bottom" id="AWt-da-tsi"/>
+                            <constraint firstAttribute="trailing" secondItem="iOS-7u-5QN" secondAttribute="trailing" id="Tar-l9-8Wc"/>
+                            <constraint firstItem="iOS-7u-5QN" firstAttribute="leading" secondItem="rZl-S4-02F" secondAttribute="leading" id="UTC-YG-c6F"/>
+                            <constraint firstItem="iOS-7u-5QN" firstAttribute="top" secondItem="rZl-S4-02F" secondAttribute="top" id="gR7-7G-gi2"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My posts" image="pin-post" selectedImage="pin-post" id="yuj-5o-OtP"/>
+                    <navigationItem key="navigationItem" id="xtK-Zb-nFQ"/>
+                    <connections>
+                        <outlet property="table" destination="iOS-7u-5QN" id="abC-UX-rwI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M3P-zI-pxZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1476" y="1742.8785607196403"/>
+        </scene>
+        <!--Profile-->
         <scene sceneID="a4R-Bw-HJK">
             <objects>
                 <navigationController id="gfW-8t-dwe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="8im-Rb-C2c"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="dog" selectedImage="dog" id="8im-Rb-C2c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Utp-4h-6ph">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -317,7 +398,6 @@
                             <constraint firstAttribute="trailing" secondItem="bEC-eJ-y6n" secondAttribute="trailing" id="zyS-ie-mwK"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="HOU-DQ-bSs"/>
                     <navigationItem key="navigationItem" title="My profile" id="cO3-et-Ml4"/>
                     <connections>
                         <outlet property="crumbsTableView" destination="5W3-dQ-Q6X" id="WnK-ey-BFS"/>
@@ -440,6 +520,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="jyb-Da-pdX" kind="relationship" relationship="viewControllers" id="YR1-ao-15K"/>
+                        <segue destination="38z-KX-oTl" kind="relationship" relationship="viewControllers" id="uMn-i8-gpy"/>
                         <segue destination="gfW-8t-dwe" kind="relationship" relationship="viewControllers" id="3ws-im-bgp"/>
                     </connections>
                 </tabBarController>
@@ -447,11 +528,11 @@
             </objects>
             <point key="canvasLocation" x="-1524" y="312"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Map-->
         <scene sceneID="5wX-ic-U4d">
             <objects>
                 <navigationController id="jyb-Da-pdX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" selectedImage="map-marker" systemItem="featured" id="7rv-us-WHd"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" selectedImage="map" id="7rv-us-WHd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uxP-XZ-S8f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -466,8 +547,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="dog" width="18" height="18"/>
         <image name="down" width="44" height="44"/>
-        <image name="map-marker" width="44" height="44"/>
+        <image name="map" width="18" height="18"/>
+        <image name="pin-post" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="omb-jC-ClS"/>

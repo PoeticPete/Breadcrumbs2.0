@@ -23,6 +23,9 @@
 		865FC1D81DC4514A00875ECC /* CrumbTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1D71DC4514A00875ECC /* CrumbTableViewCell.swift */; };
 		865FC1DA1DC455AD00875ECC /* PhotoCrumbTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1D91DC455AD00875ECC /* PhotoCrumbTableViewCell.swift */; };
 		865FC1DC1DC45A1E00875ECC /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1DB1DC45A1E00875ECC /* CommentTableViewCell.swift */; };
+		865FC1E31DC65F0100875ECC /* MyPostsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E21DC65F0100875ECC /* MyPostsTableViewController.swift */; };
+		865FC1E51DC65F7500875ECC /* MyTextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E41DC65F7500875ECC /* MyTextPostTableViewCell.swift */; };
+		865FC1E71DC65F8700875ECC /* MyPhotoPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865FC1E61DC65F8700875ECC /* MyPhotoPostTableViewCell.swift */; };
 		86734D031DB1771900195E42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D021DB1771900195E42 /* AppDelegate.swift */; };
 		86734D051DB1771900195E42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86734D041DB1771900195E42 /* ViewController.swift */; };
 		86734D081DB1771900195E42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86734D061DB1771900195E42 /* Main.storyboard */; };
@@ -60,6 +63,9 @@
 		865FC1D71DC4514A00875ECC /* CrumbTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrumbTableViewCell.swift; sourceTree = "<group>"; };
 		865FC1D91DC455AD00875ECC /* PhotoCrumbTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCrumbTableViewCell.swift; sourceTree = "<group>"; };
 		865FC1DB1DC45A1E00875ECC /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		865FC1E21DC65F0100875ECC /* MyPostsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostsTableViewController.swift; sourceTree = "<group>"; };
+		865FC1E41DC65F7500875ECC /* MyTextPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTextPostTableViewCell.swift; sourceTree = "<group>"; };
+		865FC1E61DC65F8700875ECC /* MyPhotoPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPhotoPostTableViewCell.swift; sourceTree = "<group>"; };
 		86734CFF1DB1771900195E42 /* Breadcrumbs 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breadcrumbs 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86734D021DB1771900195E42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86734D041DB1771900195E42 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +178,16 @@
 			name = "Profile table view";
 			sourceTree = "<group>";
 		};
+		865FC1E81DC65F8C00875ECC /* MyPosts table view */ = {
+			isa = PBXGroup;
+			children = (
+				865FC1E21DC65F0100875ECC /* MyPostsTableViewController.swift */,
+				865FC1E41DC65F7500875ECC /* MyTextPostTableViewCell.swift */,
+				865FC1E61DC65F8700875ECC /* MyPhotoPostTableViewCell.swift */,
+			);
+			name = "MyPosts table view";
+			sourceTree = "<group>";
+		};
 		86734CF61DB1771900195E42 = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +217,7 @@
 				86734D0B1DB1771900195E42 /* LaunchScreen.storyboard */,
 				86734D091DB1771900195E42 /* Assets.xcassets */,
 				86734D021DB1771900195E42 /* AppDelegate.swift */,
+				865FC1E81DC65F8C00875ECC /* MyPosts table view */,
 				865FC1D11DC431B200875ECC /* Map Stuff */,
 				865FC1DD1DC45F2100875ECC /* CrumbTableView */,
 				865FC1DE1DC45F3400875ECC /* Profile table view */,
@@ -379,10 +396,13 @@
 				86734D051DB1771900195E42 /* ViewController.swift in Sources */,
 				8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */,
 				1F69D24B1DB7F7B100E54536 /* ProfileTableViewCell.swift in Sources */,
+				865FC1E31DC65F0100875ECC /* MyPostsTableViewController.swift in Sources */,
 				865FC1DC1DC45A1E00875ECC /* CommentTableViewCell.swift in Sources */,
+				865FC1E51DC65F7500875ECC /* MyTextPostTableViewCell.swift in Sources */,
 				864361631DB56B8800F3E6C0 /* CalloutView.swift in Sources */,
 				865FC1D01DC4319500875ECC /* PhotoCalloutView.swift in Sources */,
 				1F8257B51DB6B00100CA8E51 /* ProfileViewController.swift in Sources */,
+				865FC1E71DC65F8700875ECC /* MyPhotoPostTableViewCell.swift in Sources */,
 				86734D651DB1B76000195E42 /* GFGeoHash.m in Sources */,
 				860E53B21DC39E5A00B07CFB /* NYAlertView.m in Sources */,
 				86734D031DB1771900195E42 /* AppDelegate.swift in Sources */,

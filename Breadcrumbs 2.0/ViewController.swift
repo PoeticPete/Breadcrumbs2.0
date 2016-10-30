@@ -382,14 +382,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     func setMessage(loc:CLLocation, message:String) {
         let randomKey = FIRDatabase.database().reference().childByAutoId()
-        //        let allPosts = FIRDatabase.database().reference().child("allPosts")
-        //        let myPosts = FIRDatabase.database().reference().child("myPosts")
         
         let firebaseTimeStamp = [".sv":"timestamp"]
         setNewLocation(loc: loc, baseRef: currPostsRef, key: randomKey.key)
         allPostsRef.child(randomKey.key).child("message").setValue(message)
         allPostsRef.child(randomKey.key).child("upVotes").setValue(0)
+        allPostsRef.child(randomKey.key).child("deviceID").setValue(deviceID)
         allPostsRef.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
+        
+        myPostsRef.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
     }
     
     func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate, hasPicture:Bool) {
