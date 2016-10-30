@@ -200,23 +200,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         if annotation.hasPicture == true {
             print("THIS VIEW HAS A PICTURE")
             let views = Bundle.main.loadNibNamed("PhotoCallout", owner: self, options: nil)
-            print(views!)
             let calloutview = views![0] as! PhotoCalloutView
             calloutview.layer.cornerRadius = 20
             calloutview.layer.borderWidth = 5.0
             calloutview.layer.borderColor = getColor(annotation.upVotes!).cgColor
             calloutview.layer.masksToBounds = true
-            let url = URL(string: "https://res.cloudinary.com/dufz2rmju/\(annotation.key!)")
             calloutview.annotation = annotation
-            
             calloutview.photoView.contentMode = .scaleAspectFill
-            if let data = try? Data(contentsOf: url!) {
-                calloutview.photoView.image = UIImage(data: data)
-                annotation.picture = UIImage(data: data)
+            
+            
+            let url = "https://res.cloudinary.com/dufz2rmju/\(annotation.key!)"
+            if let img = getImageFromURL(url) {
+                calloutview.photoView.image = img
+                annotation.picture = img
             } else {
-                print("no image")
-                 calloutview.photoView.image = UIImage()
+                calloutview.photoView.image = UIImage()
+                annotation.picture = UIImage()
             }
+
             calloutview.commentsButton.addTarget(self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
             calloutview.commentsButton.backgroundColor = getColor(annotation.upVotes!)
             

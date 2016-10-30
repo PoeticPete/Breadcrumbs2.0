@@ -30,6 +30,17 @@ func getMyVotes() {
     })
 }
 
+func getImageFromURL(_ urlString:String) -> UIImage? {
+    let url = URL(string: urlString)
+    if let data = try? Data(contentsOf: url!) {
+        return UIImage(data: data)
+    } else {
+        print("no image")
+        return nil
+    }
+
+}
+
 // get color based on number of likes
 func getColor(_ likes:Int) -> UIColor {
     
