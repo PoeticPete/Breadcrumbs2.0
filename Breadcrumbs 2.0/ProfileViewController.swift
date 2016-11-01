@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Firebase
+
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var myPosts = [Post]()
+    
     @IBOutlet weak var crumbsTableView: UITableView!
     @IBOutlet weak var profileDescriptionView: UIView!
 
@@ -40,6 +44,47 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.headerHeight.constant = self.maxHeaderHeight
+        getMyPostsAndRefresh()
+    }
+    
+    func getMyPostsAndRefresh() {
+        print("Getting posts and refreshing")
+        myPosts.removeAll()
+        myPostsRef.observeSingleEvent(of: FIRDataEventType.value, with: { snapshot in
+            for child in snapshot.children {
+                let childSnap = child as! FIRDataSnapshot
+                allPostsRef.child(childSnap.key).observeSingleEvent(of: FIRDataEventType.value, with: { postSnap in
+                    var message:String!
+                    var timestamp:NSDate!
+                    var upVotes:Int!
+                    var hasPicture:Bool!
+                    if let m = postSnap.childSnapshot(forPath: "message").value as? String {
+                        message = m
+                    }
+                    if let t = postSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
+                        timestamp = NSDate(timeIntervalSince1970: t/1000)
+                    }
+                    if let uv = postSnap.childSnapshot(forPath: "upVotes").value as? Int {
+                        upVotes = uv
+                    }
+                    if postSnap.childSnapshot(forPath: "hasPicture").exists() {
+                        if let hp = postSnap.childSnapshot(forPath: "hasPicture").value as? Bool {
+                            hasPicture = hp
+                        }
+                    } else {
+                        hasPicture = false
+                    }
+                    //                    print("\(message) \(timestamp) \(upVotes) \(hasPicture)")
+                    
+                    if message != nil && timestamp != nil && upVotes != nil && hasPicture != nil {
+                        var newPost = Post(key: childSnap.key, message: message, upVotes: upVotes, timestamp: timestamp, hasPicture: hasPicture)
+                        self.myPosts.append(newPost)
+                        self.crumbsTableView.reloadData()
+                    }
+                })
+                
+            }
+        })
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -129,7 +174,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 40
+        return myPosts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,11 +182,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         
         //next step is loading this info from firebase!
-        cell.changeTitle(newTitle: "Cell \(indexPath.row)")
+        cell.changeTitle(newTitle: myPosts[indexPath.row].message)
         cell.changeDescription(newDesc: "test description yo! this is a really long line that will need a line break, so let's make sure that works! long descriptions should not be allowed in the final project. possibly character limit.")
         cell.changeLocation(newLocation: "Some GPS Coordinates or location name that the person put in")
-        cell.changeScore(newScore: 52)
-        cell.changeIMG(newIMG: UIImage.init(named: "map-marker")!)
+        cell.changeScore(newScore: myPosts[indexPath.row].upVotes)
+        if(myPosts[indexPath.row].hasPicture == true){
+            cell.changeIMG(newIMG: myPosts[indexPath.row].picture!)
+        }
         return cell
     }
     
