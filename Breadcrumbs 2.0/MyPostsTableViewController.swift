@@ -29,6 +29,9 @@ class MyPostsTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //TODO:
+        //create dictionary to hold key->uiimage so we don't have to reload
+        
         crumbsTableView.rowHeight = 180
         
         statsLabel.adjustsFontSizeToFitWidth = true
@@ -179,7 +182,7 @@ class MyPostsTableViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.crumbsTableView.dequeueReusableCell(withIdentifier: "ProfCell") as! ProfileTableViewCell
-        
+        cell.changeIMG(newIMG: UIImage())
         
         //next step is loading this info from firebase!
         cell.changeTitle(newTitle: nearbyPosts[indexPath.row].message)
@@ -188,6 +191,9 @@ class MyPostsTableViewController: UIViewController, UITableViewDelegate, UITable
         cell.changeScore(newScore: nearbyPosts[indexPath.row].upVotes)
         if(nearbyPosts[indexPath.row].hasPicture == true){
             cell.changeIMG(newIMG: getImageFromURL(cloudinaryBaseURL + nearbyPosts[indexPath.row].key)!)
+        }
+        else{
+            //move the text to the left
         }
         return cell
     }
