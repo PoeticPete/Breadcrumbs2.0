@@ -39,6 +39,8 @@
 		86734D671DB1B76000195E42 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 86734D601DB1B76000195E42 /* GFQuery.m */; };
 		86734D6A1DB1B89500195E42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86734D691DB1B89500195E42 /* GoogleService-Info.plist */; };
 		86734D6C1DB1D11500195E42 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86734D6B1DB1D11500195E42 /* MapKit.framework */; };
+		86A0BCCD1DC6CC04005B3ADB /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A0BCCC1DC6CC04005B3ADB /* Comment.swift */; };
+		86A0BCCF1DC6CD61005B3ADB /* NewCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A0BCCE1DC6CD61005B3ADB /* NewCommentTableViewCell.swift */; };
 		86BD85441DBA857E00A6DF6D /* libCloudinary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86BD85431DBA857E00A6DF6D /* libCloudinary.a */; };
 		F7188C827BAC42986DE1B3D1 /* Pods_Breadcrumbs_2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE22450085868D298AAAE23F /* Pods_Breadcrumbs_2_0.framework */; };
 /* End PBXBuildFile section */
@@ -92,6 +94,8 @@
 		86734D621DB1B76000195E42 /* GFRegionQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFRegionQuery.h; sourceTree = "<group>"; };
 		86734D691DB1B89500195E42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86734D6B1DB1D11500195E42 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		86A0BCCC1DC6CC04005B3ADB /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		86A0BCCE1DC6CD61005B3ADB /* NewCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCommentTableViewCell.swift; sourceTree = "<group>"; };
 		86BD85431DBA857E00A6DF6D /* libCloudinary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCloudinary.a; sourceTree = "<group>"; };
 		86BD85451DBA85A200A6DF6D /* CLCloudinary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLCloudinary.h; sourceTree = "<group>"; };
 		86BD85461DBA85A200A6DF6D /* CLEagerTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLEagerTransformation.h; sourceTree = "<group>"; };
@@ -163,10 +167,12 @@
 		865FC1DD1DC45F2100875ECC /* CrumbTableView */ = {
 			isa = PBXGroup;
 			children = (
+				86A0BCCE1DC6CD61005B3ADB /* NewCommentTableViewCell.swift */,
 				865FC1DB1DC45A1E00875ECC /* CommentTableViewCell.swift */,
 				865FC1D91DC455AD00875ECC /* PhotoCrumbTableViewCell.swift */,
 				865FC1D71DC4514A00875ECC /* CrumbTableViewCell.swift */,
 				865FC1D51DC44EF100875ECC /* CrumbTableViewController.swift */,
+				86A0BCCC1DC6CC04005B3ADB /* Comment.swift */,
 			);
 			name = CrumbTableView;
 			sourceTree = "<group>";
@@ -398,6 +404,7 @@
 				86734D641DB1B76000195E42 /* GFBase32Utils.m in Sources */,
 				86734D051DB1771900195E42 /* ViewController.swift in Sources */,
 				8643615F1DB5679600F3E6C0 /* CustomAnnotation.swift in Sources */,
+				86A0BCCF1DC6CD61005B3ADB /* NewCommentTableViewCell.swift in Sources */,
 				1F69D24B1DB7F7B100E54536 /* ProfileTableViewCell.swift in Sources */,
 				865FC1E31DC65F0100875ECC /* MyPostsTableViewController.swift in Sources */,
 				865FC1DC1DC45A1E00875ECC /* CommentTableViewCell.swift in Sources */,
@@ -416,6 +423,7 @@
 				865FC1D81DC4514A00875ECC /* CrumbTableViewCell.swift in Sources */,
 				865FC1DA1DC455AD00875ECC /* PhotoCrumbTableViewCell.swift in Sources */,
 				86734D661DB1B76000195E42 /* GFGeoHashQuery.m in Sources */,
+				86A0BCCD1DC6CC04005B3ADB /* Comment.swift in Sources */,
 				864361651DB572BD00F3E6C0 /* Extensions.swift in Sources */,
 				865FC1D61DC44EF100875ECC /* CrumbTableViewController.swift in Sources */,
 				860E53B31DC39E5A00B07CFB /* NYAlertViewController.m in Sources */,
