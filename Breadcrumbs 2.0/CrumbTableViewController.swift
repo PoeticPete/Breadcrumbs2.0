@@ -90,10 +90,13 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     func sendTapped() {
         print("Send tapped")
         print(newCommentField.text)
+        newCommentField.text = ""
+        self.view.endEditing(true)
     }
     
     func cancelTapped() {
         print("cancel tapped")
+        newCommentField.text = ""
         self.view.endEditing(true)
     }
     

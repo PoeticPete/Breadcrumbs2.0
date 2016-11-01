@@ -370,12 +370,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
                 if let time = messageSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
                     let date = NSDate(timeIntervalSince1970: time/1000)
+                    
+                    
                     var hasPicture = false
                     if messageSnap.childSnapshot(forPath: "hasPicture").exists() {
                         hasPicture = messageSnap.childSnapshot(forPath: "hasPicture").value as! Bool
                     }
-                    
-                    
+
                     self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date, hasPicture: hasPicture)
                 }
             })
