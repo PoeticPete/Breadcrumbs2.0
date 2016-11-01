@@ -50,7 +50,7 @@ class ProfileTableViewCell: UITableViewCell {
         }
         else if(newScore<0){
             scoreLabel.textColor = UIColor.red
-            scoreLabel.text = "-\(newScore)"
+            scoreLabel.text = "\(newScore)"
         }
         else{
             scoreLabel.textColor = UIColor.black
