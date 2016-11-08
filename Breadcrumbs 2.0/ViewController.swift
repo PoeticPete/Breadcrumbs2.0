@@ -370,7 +370,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
                 if let time = messageSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
                     let date = NSDate(timeIntervalSince1970: time/1000)
-                    
+                    print(date.timeIntervalSinceNow < -86000)
                     
                     var hasPicture = false
                     if messageSnap.childSnapshot(forPath: "hasPicture").exists() {
