@@ -36,15 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         setupAnnotationIconImage()
         getMyVotes()
         Cloudinary = CLCloudinary(url: "cloudinary://645121525236522:HQ90xZWm0Dt0w2UzIcSLtjhG5CA@dufz2rmju") // get this value from server later
-        map.showsUserLocation = true
-        if UserDefaults.standard.object(forKey: "lastLongitude") != nil && UserDefaults.standard.object(forKey: "lastLatitude") != nil && UserDefaults.standard.object(forKey: "lastLocationName") != nil {
-            print("successfully retrieved all user defaults")
-            currentLocation = CLLocation(latitude: UserDefaults.standard.object(forKey: "lastLatitude") as! CLLocationDegrees, longitude: UserDefaults.standard.object(forKey: "lastLongitude") as! CLLocationDegrees)
-            currentLocationName = UserDefaults.standard.object(forKey: "lastLocationName") as! String
-            let center = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.10, longitudeDelta: 0.10))
-            self.map.setRegion(region, animated: true)
-        }
+        setupMap()
         
     }
     
@@ -192,7 +184,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Don't proceed with custom callout
             return
         }
-        mapView.setCenter((view.annotation?.coordinate)!, animated: false)
+        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
         
         
         annotation = view.annotation as! CustomAnnotation
@@ -288,14 +280,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         {
             clearCallouts()
             map.selectedAnnotations.removeAll()
-
         }
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        if view.isKind(of: AnnotationView.self)
+        for subview in self.view.subviews
         {
             clearCallouts()
+            map.selectedAnnotations.removeAll()
+            
         }
     }
     
@@ -303,7 +296,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         for subview in self.view.subviews
         {
             if subview.isKind(of: CalloutView.self) || subview.isKind(of: PhotoCalloutView.self){
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: 1.0, animations: {
                     subview.alpha = 0.0
                     }, completion: { void in
                         subview.removeFromSuperview()
@@ -357,6 +350,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         manager.requestLocation()
     }
     
+    func setupMap() {
+        map.showsUserLocation = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.mapTapped))
+        self.view.addGestureRecognizer(tap)
+        
+        if UserDefaults.standard.object(forKey: "lastLongitude") != nil && UserDefaults.standard.object(forKey: "lastLatitude") != nil && UserDefaults.standard.object(forKey: "lastLocationName") != nil {
+            print("successfully retrieved all user defaults")
+            currentLocation = CLLocation(latitude: UserDefaults.standard.object(forKey: "lastLatitude") as! CLLocationDegrees, longitude: UserDefaults.standard.object(forKey: "lastLongitude") as! CLLocationDegrees)
+            currentLocationName = UserDefaults.standard.object(forKey: "lastLocationName") as! String
+            let center = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.10, longitudeDelta: 0.10))
+            self.map.setRegion(region, animated: true)
+        }
+    }
+    
+    func mapTapped(sender: UITapGestureRecognizer? = nil) {
+        print("tapped map")
+        for subview in self.view.subviews
+        {
+            clearCallouts()
+            map.selectedAnnotations.removeAll()
+        }
+        
+    }
+    
     
     // ----------------------Retrieve from Database-------------------------------------------
     func getLocalMessages() {
@@ -370,7 +389,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
                 if let time = messageSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
                     let date = NSDate(timeIntervalSince1970: time/1000)
-                    print(date.timeIntervalSinceNow < -86000)
+//                    print(date.timeIntervalSinceNow < -86000) // use this to delete messages
                     
                     var hasPicture = false
                     if messageSnap.childSnapshot(forPath: "hasPicture").exists() {
@@ -412,6 +431,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
 
 }
+
+
+
+
+
+
+
+// ----------------------------------EXTENSIONS--------------------------------------------------
 
 extension ViewController: UIImagePickerControllerDelegate,
 UINavigationControllerDelegate{
