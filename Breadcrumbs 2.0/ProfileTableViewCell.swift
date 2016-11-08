@@ -40,7 +40,9 @@ class ProfileTableViewCell: UITableViewCell {
     }
     
     func changeIMG(newIMG: UIImage){
+        imgView.isHidden = false
         imgView.image = newIMG
+        imgView.contentMode = .scaleAspectFit
     }
 
     func changeScore(newScore: Int){
@@ -56,5 +58,9 @@ class ProfileTableViewCell: UITableViewCell {
             scoreLabel.textColor = UIColor.black
             scoreLabel.text = "\(newScore)"
         }
+    }
+    
+    func compressIMG(){
+        imgView.isHidden = true
     }
 }
