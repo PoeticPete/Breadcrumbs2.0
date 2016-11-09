@@ -16,7 +16,6 @@ let myPostsRef = FIRDatabase.database().reference().child("myPosts").child(devic
 let cloudinaryBaseURL = "https://res.cloudinary.com/dufz2rmju/"
 var myVotes = [String: Int]()
 
-
 // this function will create a new geoFire location in Firebase
 func setNewLocation(loc: CLLocation, baseRef: FIRDatabaseReference, key:String) {
     let newGeoFire = GeoFire(firebaseRef: baseRef)
@@ -30,17 +29,6 @@ func getMyVotes() {
             myVotes[childSnap.key] = childSnap.value as! Int
         }
     })
-}
-
-func getImageFromURL(_ urlString:String) -> UIImage? {
-    let url = URL(string: urlString)
-    if let data = try? Data(contentsOf: url!) {
-        return UIImage(data: data)
-    } else {
-        print("no image")
-        return nil
-    }
-
 }
 
 // get color based on number of likes

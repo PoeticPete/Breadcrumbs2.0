@@ -296,11 +296,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         for subview in self.view.subviews
         {
             if subview.isKind(of: CalloutView.self) || subview.isKind(of: PhotoCalloutView.self){
-                UIView.animate(withDuration: 1.0, animations: {
-                    subview.alpha = 0.0
-                    }, completion: { void in
-                        subview.removeFromSuperview()
-                })
+                subview.removeFromSuperview()
+
+//                UIView.animate(withDuration: 1.0, animations: {
+//                    subview.alpha = 0.0
+//                    }, completion: { void in
+//                        subview.removeFromSuperview()
+//                })
             }
             
         }
