@@ -459,7 +459,7 @@ extension ViewController: CLUploaderDelegate {
     
     func uploadToCloudinary(fileId:String){
         //        let forUpload = UIImagePNGRepresentation(self.image!)! as Data
-        let forUpload = UIImageJPEGRepresentation(self.imagePicked!, 0.2)! as Data
+        let forUpload = UIImageJPEGRepresentation(self.imagePicked!, 0.1)! as Data
         let uploader = CLUploader(Cloudinary, delegate: self)
         
         //        uploader?.upload(forUpload, options: ["public_id":fileId])

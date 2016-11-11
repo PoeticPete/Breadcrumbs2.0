@@ -10,18 +10,19 @@
 
 
 func getImageFromURL(_ urlString:String) -> UIImage? {
-    if let image = loadImageFromPath(path: urlString) {
+    if let image = loadImageFromPath(path: getStoragePath(urlString)) {
+        print("loaded image")
         return image
     } else {
         let url = URL(string: urlString)
         if let data = try? Data(contentsOf: url!) {
+            saveImage(data: data as NSData, path: getStoragePath(urlString))
             return UIImage(data: data)
         } else {
             print("no image")
             return nil
         }
     }
-    
 }
 
 func saveImage(data: NSData, path: String ) -> Bool {
@@ -33,8 +34,38 @@ func saveImage(data: NSData, path: String ) -> Bool {
         addSkipBackupAttributeToItemAtURL(path)
     }
     
-    //    print("saved result: \(result)")
+    print("saved result: \(result)")
     return result
+}
+
+
+
+func loadImageFromPath(path: String) -> UIImage? {
+    let fullPath = imageInDocumentsDirectory(path)
+    if let data = NSData(contentsOfFile: fullPath) {
+        let image = UIImage(data: data as Data)
+        if image == nil {
+            print("missing image at: \(fullPath)")
+        } else {
+            //        print("Loading image from path: \(fullPath)")
+        }
+        return image
+    } else {
+        return nil
+    }
+}
+
+//------------------------------Helper Functions---------------------------------------------
+//-------------------------------------------------------------------------------------------
+
+func imageInDocumentsDirectory(_ filename: String) -> String {
+    let fileURL = getDocumentsURL().appendingPathComponent(filename)
+    return fileURL!.path
+}
+
+func getDocumentsURL() -> NSURL {
+    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    return documentsURL as NSURL
 }
 
 func addSkipBackupAttributeToItemAtURL(_ filePath:String) -> Bool
@@ -60,29 +91,6 @@ func addSkipBackupAttributeToItemAtURL(_ filePath:String) -> Bool
     return success
 }
 
-func loadImageFromPath(path: String) -> UIImage? {
-    let fullPath = imageInDocumentsDirectory(path)
-    if let data = NSData(contentsOfFile: fullPath) {
-        let image = UIImage(data: data as Data)
-        if image == nil {
-            print("missing image at: \(fullPath)")
-        } else {
-            //        print("Loading image from path: \(fullPath)")
-        }
-        return image
-    } else {
-        return nil
-    }
-}
-
-//------------------------------Helper Functions---------------------------------------------
-
-func imageInDocumentsDirectory(_ filename: String) -> String {
-    let fileURL = getDocumentsURL().appendingPathComponent(filename)
-    return fileURL!.path
-}
-
-func getDocumentsURL() -> NSURL {
-    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    return documentsURL as NSURL
+func getStoragePath(_ string:String) -> String {
+    return string.replacingOccurrences(of: "/", with: "SLASH")
 }
