@@ -13,8 +13,10 @@ let allPostsRef = FIRDatabase.database().reference().child("allPosts")
 let currPostsRef = FIRDatabase.database().reference().child("currentPostLocations")
 let myVotesRef = FIRDatabase.database().reference().child("myVotes")
 let myPostsRef = FIRDatabase.database().reference().child("myPosts").child(deviceID)
+let commentsRef = FIRDatabase.database().reference().child("comments")
 let cloudinaryBaseURL = "https://res.cloudinary.com/dufz2rmju/"
 var myVotes = [String: Int]()
+let firebaseTimeStamp = [".sv":"timestamp"]
 
 // this function will create a new geoFire location in Firebase
 func setNewLocation(loc: CLLocation, baseRef: FIRDatabaseReference, key:String) {

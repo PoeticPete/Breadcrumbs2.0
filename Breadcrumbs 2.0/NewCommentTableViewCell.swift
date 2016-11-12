@@ -13,6 +13,7 @@ class NewCommentTableViewCell: UITableViewCell{
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var characterLabel: UILabel!
 
     
     override func awakeFromNib() {

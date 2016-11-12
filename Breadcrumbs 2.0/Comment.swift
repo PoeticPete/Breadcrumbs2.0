@@ -9,8 +9,7 @@
 import Foundation
 
 struct Comment {
-    var text:String!
-    var upVotes:String!
+    var message:String!
+    var upVotes:Int!
     var timestamp:NSDate!
-    var userID:String!
 }

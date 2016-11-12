@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
 
@@ -15,16 +16,31 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var comments = [Comment]()
     var keyboardHeight:CGFloat!
     var newCommentField: UITextView!
+    var characterLabel:UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(CrumbTableViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-
+        getComments()
         print(annotation)
     }
 
     func getComments() {
-        
+        commentsRef.child(annotation.post.key).observeSingleEvent(of: .value, with: { commentsSnap in
+            print(commentsSnap)
+            for child in commentsSnap.children {
+                let childSnap = child as! FIRDataSnapshot
+                let message = childSnap.childSnapshot(forPath: "message").value! as! String
+                let timestamp = childSnap.childSnapshot(forPath: "timestamp").value as! TimeInterval
+                let date = NSDate(timeIntervalSince1970: timestamp/1000)
+                var upVotes = 0
+                if childSnap.childSnapshot(forPath: "upVotes").exists() {
+                    upVotes = childSnap.childSnapshot(forPath: "upVotes").value! as! Int
+                }
+                self.comments.append(Comment(message: message, upVotes: upVotes, timestamp: date))
+            }
+            self.table.reloadData()
+        })
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -76,12 +92,14 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
             self.newCommentField = cell.textView
             cell.sendButton.addTarget(self, action: #selector(CrumbTableViewController.sendTapped), for: UIControlEvents.touchUpInside)
             cell.cancelButton.addTarget(self, action: #selector(CrumbTableViewController.cancelTapped), for: UIControlEvents.touchUpInside)
+            characterLabel = cell.characterLabel
             // (self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
             return cell
             
         } else {
             // comments
             let cell = table.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentTableViewCell
+            cell.messageLabel.text = comments[indexPath.row - 1].message
             return cell
         }
        
@@ -89,7 +107,18 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func sendTapped() {
         print("Send tapped")
+        if newCommentField.text == "New comment" || newCommentField.text.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines) == "" {
+            return
+        }
+        
+        
+        let comRef = commentsRef.child(annotation.post.key).childByAutoId()
+        comRef.child("message").setValue(newCommentField.text)
+        comRef.child("timestamp").setValue(firebaseTimeStamp)
+        comRef.child("deviceID").setValue(deviceID)
+        print("adding comment to \(comRef)")
         print(newCommentField.text)
+        
         newCommentField.text = ""
         self.view.endEditing(true)
     }
@@ -102,7 +131,7 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func moveTable(height: CGFloat, up: Bool)
     {
-        let movementDistance:CGFloat = -130
+        let movementDistance:CGFloat = -180
         let movementDuration: Double = 0.3
         
         var movement:CGFloat = 0
@@ -124,8 +153,6 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         print("began editing")
-        print(textView.textColor)
-        print(UIColor.lightGray)
         print(textView.textColor == UIColor.lightGray)
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
@@ -145,8 +172,13 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count // for Swift use count(newText)
+        var charsLeft = 140 - numberOfChars
+        if charsLeft < 0 {
+            charsLeft = 0
+        }
+        characterLabel.text = "\(charsLeft)"
         
-        return numberOfChars < 10;
+        return numberOfChars < 141;
     }
     
     func keyboardWillShow(notification:NSNotification) {

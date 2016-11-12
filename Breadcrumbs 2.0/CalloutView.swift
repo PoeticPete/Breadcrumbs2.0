@@ -15,6 +15,9 @@ class CalloutView: UIView {
     var downSelected = false
     var annotation:CustomAnnotation!
     
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var commentsButton: UIButton!
+    
     @IBOutlet weak var upvotesLabel: UILabel!
     @IBOutlet weak var upOutlet: UIButton!
     @IBOutlet weak var downOutlet: UIButton!
@@ -74,14 +77,6 @@ class CalloutView: UIView {
         downSelected = !downSelected
 
     }
-    
-    
-    @IBOutlet weak var messageLabel: UILabel!
-    
-    
-    @IBOutlet weak var commentsButton: UIButton!
-
-    
     
     func vote(_ i: Int) {
         allPostsRef.child(annotation.post.key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in

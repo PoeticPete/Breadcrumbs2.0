@@ -198,8 +198,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             calloutview.layer.borderColor = getColor(annotation.post.upVotes!).cgColor
             calloutview.layer.masksToBounds = true
             calloutview.annotation = annotation
+            calloutview.upvotesLabel.text = "\(annotation.post.upVotes!)"
             calloutview.photoView.contentMode = .scaleAspectFill
-            
+            calloutview.timestampLabel.layer.cornerRadius = 5
+            calloutview.timestampLabel.layer.masksToBounds = true
+            calloutview.timestampLabel.text = " " + timeAgoSinceDate(date: calloutview.annotation.post.timestamp, numericDates: true) + " "
+            calloutview.votingView.layer.cornerRadius = 5
+            calloutview.votingView.layer.masksToBounds = true
+            calloutview.votingView.isHidden = true
+            calloutview.timestampLabel.isHidden = true
             
             let url = "https://res.cloudinary.com/dufz2rmju/\(annotation.post.key!)"
             if let img = getImageFromURL(url) {
@@ -210,6 +217,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 annotation.post.picture = UIImage()
             }
 
+            if myVotes[annotation.post.key] == 1 {
+                calloutview.upSelected = true
+                calloutview.upOutlet.tintColor = getColor(annotation.post.upVotes!)
+            } else if myVotes[annotation.post.key] == -1 {
+                calloutview.downSelected = true
+                calloutview.downOutlet.tintColor = getColor(annotation.post.upVotes!)
+            }
+            
             calloutview.commentsButton.addTarget(self, action: #selector(ViewController.toCrumbTableView), for: UIControlEvents.touchUpInside)
             calloutview.commentsButton.backgroundColor = getColor(annotation.post.upVotes!)
             
@@ -407,7 +422,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     func setMessage(loc:CLLocation, message:String) {
         let randomKey = FIRDatabase.database().reference().childByAutoId()
         
-        let firebaseTimeStamp = [".sv":"timestamp"]
+        
         setNewLocation(loc: loc, baseRef: currPostsRef, key: randomKey.key)
         allPostsRef.child(randomKey.key).child("message").setValue(message)
         allPostsRef.child(randomKey.key).child("upVotes").setValue(0)
