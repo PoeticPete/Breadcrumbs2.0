@@ -11,11 +11,26 @@ import UIKit
 class PhotoCrumbTableViewCell: UITableViewCell {
 
     @IBOutlet weak var photo: UIImageView!
+    @IBOutlet weak var votingView: UIView!
+    @IBOutlet weak var timestampLabel: UILabel!
     
+    @IBAction func photoTapped(_ sender: Any) {
+        if votingView.isHidden == true {
+            votingView.isHidden = false
+            timestampLabel.isHidden = false
+        } else {
+            votingView.isHidden = true
+            timestampLabel.isHidden = true
+        }
+        
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        votingView.layer.cornerRadius = 10
+        votingView.layer.masksToBounds = true
+        timestampLabel.layer.cornerRadius = 10
+        timestampLabel.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

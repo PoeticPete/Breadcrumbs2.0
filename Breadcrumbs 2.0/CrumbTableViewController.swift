@@ -80,6 +80,7 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
         if annotation.post.hasPicture == true && indexPath.row == 0 {
             let cell = table.dequeueReusableCell(withIdentifier: "PhotoCrumbCell") as! PhotoCrumbTableViewCell
             cell.photo.image = annotation.post.picture
+            cell.timestampLabel.text = "  " + timeAgoSinceDate(date: annotation.post.timestamp, numericDates: true) + "  "
             return cell
         } else if annotation.post.hasPicture == false && indexPath.row == 0{
             let cell = table.dequeueReusableCell(withIdentifier: "CrumbCell") as! CrumbTableViewCell
@@ -99,7 +100,10 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             // comments
             let cell = table.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentTableViewCell
-            cell.messageLabel.text = comments[indexPath.row - 1].message
+            let comment = comments[indexPath.row - 1]
+            cell.messageLabel.text = comment.message
+            cell.timestampLabel.text = timeAgoSinceDate(date: comment.timestamp, numericDates: true)
+            
             return cell
         }
        
@@ -109,23 +113,24 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
         print("Send tapped")
         if newCommentField.text == "New comment" || newCommentField.text.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines) == "" {
             return
+        } else {
+            let comRef = commentsRef.child(annotation.post.key).childByAutoId()
+            comRef.child("message").setValue(newCommentField.text.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines))
+            comRef.child("timestamp").setValue(firebaseTimeStamp)
+            comRef.child("deviceID").setValue(deviceID)
+            print("adding comment to \(comRef)")
+            print(newCommentField.text)
         }
         
-        
-        let comRef = commentsRef.child(annotation.post.key).childByAutoId()
-        comRef.child("message").setValue(newCommentField.text)
-        comRef.child("timestamp").setValue(firebaseTimeStamp)
-        comRef.child("deviceID").setValue(deviceID)
-        print("adding comment to \(comRef)")
-        print(newCommentField.text)
-        
-        newCommentField.text = ""
+        newCommentField.text = "New comment"
+        newCommentField.textColor = UIColor.lightGray
         self.view.endEditing(true)
     }
     
     func cancelTapped() {
         print("cancel tapped")
-        newCommentField.text = ""
+        newCommentField.text = "New comment"
+        newCommentField.textColor = UIColor.lightGray
         self.view.endEditing(true)
     }
     

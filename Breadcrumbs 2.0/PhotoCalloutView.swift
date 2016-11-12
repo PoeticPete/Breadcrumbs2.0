@@ -31,8 +31,6 @@ class PhotoCalloutView: UIView {
             votingView.isHidden = true
             timestampLabel.isHidden = true
         }
-        
-        
     }
     @IBAction func upTapped(_ sender: AnyObject) {
         
