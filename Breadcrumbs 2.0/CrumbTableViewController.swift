@@ -37,7 +37,9 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 if childSnap.childSnapshot(forPath: "upVotes").exists() {
                     upVotes = childSnap.childSnapshot(forPath: "upVotes").value! as! Int
                 }
-                self.comments.append(Comment(message: message, upVotes: upVotes, timestamp: date))
+                let uid = childSnap.childSnapshot(forPath: "deviceID").value as! String
+                let key = childSnap.key
+                self.comments.append(Comment(message: message, upVotes: upVotes, timestamp: date, deviceID: uid, key:key))
             }
             self.table.reloadData()
         })
@@ -118,22 +120,54 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
        
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row < 1 || indexPath.row > comments.count {
+            return false
+        } else if comments[indexPath.row - 1].deviceID == deviceID {
+            return true
+        } else {
+            return false
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            print("delete this")
+            
+            let removed = comments.remove(at: indexPath.row - 1)
+            table.beginUpdates()
+            table.deleteRows(at: [indexPath], with: .fade)
+            table.endUpdates()
+            print(commentsRef.child(annotation.post.key).child(removed.key).removeValue())
+            // handle delete (by removing the data from your array and updating the tableview)
+        }
+    }
+    
     func sendTapped() {
         print("Send tapped")
-        if newCommentField.text == "New comment" || newCommentField.text.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines) == "" {
+        let trimmedComment = newCommentField.text.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
+        if newCommentField.text == "New comment" || trimmedComment == "" {
             return
         } else {
             let comRef = commentsRef.child(annotation.post.key).childByAutoId()
             comRef.child("message").setValue(newCommentField.text.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines))
             comRef.child("timestamp").setValue(firebaseTimeStamp)
             comRef.child("deviceID").setValue(deviceID)
-            print("adding comment to \(comRef)")
-            print(newCommentField.text)
+            
+            let newCom = Comment(message: trimmedComment, upVotes: 0, timestamp: NSDate(), deviceID: deviceID, key:comRef.key)
+            comments.append(newCom)
+            table.beginUpdates()
+            table.insertRows(at: [IndexPath(row: comments.count, section: 0)], with: .fade)
+            table.endUpdates()
+            
         }
         
         newCommentField.text = "New comment"
         newCommentField.textColor = UIColor.lightGray
         self.view.endEditing(true)
+        
+        
     }
     
     func cancelTapped() {

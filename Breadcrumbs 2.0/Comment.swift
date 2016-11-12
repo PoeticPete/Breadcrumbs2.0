@@ -12,4 +12,6 @@ struct Comment {
     var message:String!
     var upVotes:Int!
     var timestamp:NSDate!
+    var deviceID:String!
+    var key:String!
 }
