@@ -10,8 +10,9 @@ import UIKit
 import FirebaseDatabase
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UIGestureRecognizerDelegate {
 
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var map: MKMapView!
     
     // declare class variables
@@ -200,10 +201,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             calloutview.annotation = annotation
             calloutview.upvotesLabel.text = "\(annotation.post.upVotes!)"
             calloutview.photoView.contentMode = .scaleAspectFill
-            calloutview.timestampLabel.layer.cornerRadius = 5
+            calloutview.timestampLabel.layer.cornerRadius = 10
             calloutview.timestampLabel.layer.masksToBounds = true
-            calloutview.timestampLabel.text = " " + timeAgoSinceDate(date: calloutview.annotation.post.timestamp, numericDates: true) + " "
-            calloutview.votingView.layer.cornerRadius = 5
+            calloutview.timestampLabel.text = "  " + timeAgoSinceDate(date: calloutview.annotation.post.timestamp, numericDates: true) + "  "
+            calloutview.votingView.layer.cornerRadius = 10
             calloutview.votingView.layer.masksToBounds = true
             calloutview.votingView.isHidden = true
             calloutview.timestampLabel.isHidden = true
@@ -349,7 +350,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return annotationView
     }
     
+    func startLoadingIndicator() {
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        activityIndicator.color = UIColor.green
+        let barButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.setLeftBarButton(barButton, animated: true)
+        activityIndicator.startAnimating()
+    }
     
+    func stopLoadingIndicator() {
+        var barButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(ViewController.refreshTapped(_:)))
+        self.navigationItem.setLeftBarButton(barButton, animated: true)
+    }
     
     // --------------------------SETUP FUNCTIONS (CALLED IN VIEW DID LOAD)--------------------------
 
@@ -371,6 +383,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         map.showsUserLocation = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.mapTapped))
+        tap.delegate = self
         self.view.addGestureRecognizer(tap)
         
         if UserDefaults.standard.object(forKey: "lastLongitude") != nil && UserDefaults.standard.object(forKey: "lastLatitude") != nil && UserDefaults.standard.object(forKey: "lastLocationName") != nil {
@@ -385,6 +398,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     func mapTapped(sender: UITapGestureRecognizer? = nil) {
         print("tapped map")
+        
         for subview in self.view.subviews
         {
             clearCallouts()
@@ -393,10 +407,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
     }
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if (touch.view?.isKind(of: CalloutView.self))! {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    
     
     // ----------------------Retrieve from Database-------------------------------------------
     func getLocalMessages() {
         print("getting local messages")
+        startLoadingIndicator()
         let currGeoFire = GeoFire(firebaseRef: currPostsRef)
         let center = currentLocation
         let circleQuery = currGeoFire!.query(at: center, withRadius: 100)
@@ -414,6 +438,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     }
 
                     self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date, hasPicture: hasPicture)
+                    self.stopLoadingIndicator()
                 }
             })
         })

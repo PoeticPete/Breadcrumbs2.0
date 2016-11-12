@@ -17,6 +17,7 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var keyboardHeight:CGFloat!
     var newCommentField: UITextView!
     var characterLabel:UILabel!
+    var keyboardVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,6 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func getComments() {
         commentsRef.child(annotation.post.key).observeSingleEvent(of: .value, with: { commentsSnap in
-            print(commentsSnap)
             for child in commentsSnap.children {
                 let childSnap = child as! FIRDataSnapshot
                 let message = childSnap.childSnapshot(forPath: "message").value! as! String
@@ -81,6 +81,15 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
             let cell = table.dequeueReusableCell(withIdentifier: "PhotoCrumbCell") as! PhotoCrumbTableViewCell
             cell.photo.image = annotation.post.picture
             cell.timestampLabel.text = "  " + timeAgoSinceDate(date: annotation.post.timestamp, numericDates: true) + "  "
+            cell.annotation = self.annotation
+            cell.upvotesLabel.text = "\(annotation.post.upVotes!)"
+            if myVotes[annotation.post.key] == 1 {
+                cell.upSelected = true
+                cell.upOutlet.tintColor = getColor(annotation.post.upVotes!)
+            } else if myVotes[annotation.post.key] == -1 {
+                cell.downSelected = true
+                cell.downOutlet.tintColor = getColor(annotation.post.upVotes!)
+            }
             return cell
         } else if annotation.post.hasPicture == false && indexPath.row == 0{
             let cell = table.dequeueReusableCell(withIdentifier: "CrumbCell") as! CrumbTableViewCell
@@ -167,6 +176,7 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func textViewDidEndEditing(_ textView: UITextView) {
         print("end editting")
+        keyboardVisible = false
         if textView.text.isEmpty {
             textView.text = "New comment"
             textView.textColor = UIColor.lightGray
@@ -187,14 +197,24 @@ class CrumbTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func keyboardWillShow(notification:NSNotification) {
-        let userInfo:NSDictionary = notification.userInfo! as NSDictionary
-        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        let keyboardHeight = keyboardRectangle.height
-        print(keyboardHeight)
-        self.keyboardHeight = keyboardHeight
-        self.moveTable(height: keyboardHeight, up: true)
+        if keyboardVisible == false {
+            keyboardVisible = true
+            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            print(keyboardHeight)
+            self.keyboardHeight = keyboardHeight
+            self.moveTable(height: keyboardHeight, up: true)
+        }
     }
+    
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+
+    }
+
     
 
 }

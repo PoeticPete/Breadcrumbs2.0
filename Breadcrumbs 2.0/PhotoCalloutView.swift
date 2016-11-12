@@ -87,6 +87,35 @@ class PhotoCalloutView: UIView {
         
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        tap.numberOfTapsRequired = 2
+        self.addGestureRecognizer(tap)
+    }
+    
+    func doubleTapped() {
+        votingView.isHidden = false
+        timestampLabel.isHidden = false
+        
+        var flashView = UIView()
+        flashView.center = CGPoint(x: 0, y: 0)
+        flashView.bounds = CGRect(x: 0, y: 0, width: self.bounds.width*10, height: self.bounds.height*10)
+        self.addSubview(flashView)
+        let oldColor = self.backgroundColor?.withAlphaComponent(0.0)
+
+        
+        flashView.backgroundColor = getColor(Int(upvotesLabel.text!)!)
+        UIView.animate(withDuration: 0.2, animations: {
+            flashView.backgroundColor = oldColor
+        }, completion: { void in
+            flashView.removeFromSuperview()
+        })
+        if !upSelected {
+            upTapped(upOutlet)
+        }
+    }
+    
     func vote(_ i: Int) {
         allPostsRef.child(annotation.post.key).child("upVotes").runTransactionBlock { (currentData: FIRMutableData) -> FIRTransactionResult in
             var value = currentData.value as? Int
