@@ -27,7 +27,7 @@ class CalloutView: UIView {
     @IBAction func upTapped(_ sender: AnyObject) {
         
         if downSelected {
-            return
+            downTapped(downOutlet)
         }
         
         var currLikes = Int(upvotesLabel.text!)!
@@ -55,7 +55,7 @@ class CalloutView: UIView {
     
     @IBAction func downTapped(_ sender: AnyObject) {
         if upSelected {
-            return
+            upTapped(upOutlet)
         }
         
         var currLikes = Int(upvotesLabel.text!)!

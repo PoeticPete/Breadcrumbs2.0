@@ -17,6 +17,7 @@ let commentsRef = FIRDatabase.database().reference().child("comments")
 let cloudinaryBaseURL = "https://res.cloudinary.com/dufz2rmju/"
 var myVotes = [String: Int]()
 let firebaseTimeStamp = [".sv":"timestamp"]
+var mostUpvotes = -5
 
 // this function will create a new geoFire location in Firebase
 func setNewLocation(loc: CLLocation, baseRef: FIRDatabaseReference, key:String) {
@@ -43,12 +44,16 @@ func getColor(_ likes:Int) -> UIColor {
 //            return UIColor(red: 26.0/255.0, green: 188.0/255.0, blue: 156.0/255.0, alpha: 1.0)
 //        }
     
+    if likes <= 0 {
+        return UIColor(red: 26.0/255.0, green: 188.0/255.0, blue: 156.0/255.0, alpha: 1.0)
+    }
+    
     switch likes {
-    case let x where x >= 50:
+    case let x where x == mostUpvotes:
         return UIColor(red: 211.0/255.0, green: 84.0/255.0, blue: 0.0/255.0, alpha: 1.0)
-    case let x where x >= 25:
+    case let x where x >= mostUpvotes/2:
         return UIColor(red: 230.0/255.0, green: 126.0/255.0, blue: 34.0/255.0, alpha: 1.0)
-    case let x where x >= 5:
+    case let x where x >= mostUpvotes/4:
         return UIColor(red: 22.0/255.0, green: 160.0/255.0, blue: 133.0/255.0, alpha: 1.0)
     default:
         return UIColor(red: 26.0/255.0, green: 188.0/255.0, blue: 156.0/255.0, alpha: 1.0)

@@ -25,6 +25,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var imagePicked:UIImage!
     var Cloudinary:CLCloudinary!
     var annotation:CustomAnnotation!
+    var annotations = [CustomAnnotation]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -426,18 +428,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let circleQuery = currGeoFire!.query(at: center, withRadius: 100)
         
         circleQuery!.observe(.keyEntered, with: { snapshot in
-            
             allPostsRef.child(snapshot.0!).observeSingleEvent(of: .value, with: { messageSnap in
                 if let time = messageSnap.childSnapshot(forPath: "timestamp").value as? TimeInterval {
                     let date = NSDate(timeIntervalSince1970: time/1000)
 //                    print(date.timeIntervalSinceNow < -86000) // use this to delete messages
-                    
+                    let upvotes = messageSnap.childSnapshot(forPath: "upVotes").value as! Int
                     var hasPicture = false
                     if messageSnap.childSnapshot(forPath: "hasPicture").exists() {
                         hasPicture = messageSnap.childSnapshot(forPath: "hasPicture").value as! Bool
                     }
 
-                    self.addAnnotation(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: messageSnap.childSnapshot(forPath: "upVotes").value as! Int, key: messageSnap.key, timestamp: date, hasPicture: hasPicture)
+                    self.addAnnotationToArray(loc: snapshot.1!, message: messageSnap.childSnapshot(forPath: "message").value as! String, upVotes: upvotes, key: messageSnap.key, timestamp: date, hasPicture: hasPicture)
+                    if upvotes > mostUpvotes {
+                        mostUpvotes = upvotes
+                    }
+                    self.addAnnotationsToMap()
                     self.stopLoadingIndicator()
                 }
             })
@@ -457,11 +462,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         myPostsRef.child(randomKey.key).child("timestamp").setValue(firebaseTimeStamp)
     }
     
-    func addAnnotation(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate, hasPicture:Bool) {
+    func addAnnotationToArray(loc:CLLocation, message:String, upVotes:Int, key:String, timestamp:NSDate, hasPicture:Bool) {
         let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude))
         let newPost = Post(key: key, message: message, upVotes: upVotes, timestamp: timestamp, hasPicture: hasPicture)
         point.post = newPost
-        self.map.addAnnotation(point)
+        annotations.append(point)
+    }
+    
+    func addAnnotationsToMap() {
+        let allAnnotations = self.map.annotations
+        self.map.removeAnnotations(allAnnotations)
+        for annotation in annotations {
+            self.map.addAnnotation(annotation)
+        }
     }
     
     @IBAction func refreshTapped(_ sender: AnyObject) {
